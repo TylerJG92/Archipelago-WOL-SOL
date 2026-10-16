@@ -477,7 +477,8 @@ def set_location_rules(world: "WOLWorld") -> None:
     set_rule(world.get_location("Ghostwood Town Hall - Issued ID"),
              lambda state: state.can_reach_location("Ghostwood - Sharpened Pencil", player) and
                            state.can_reach_location("Ghostwood - Ghost Cactus", player) and
-                           state.has("Sharpened Ghost Pencil", player)) ##player needs this for permit and id issued and going forward
+                           state.has("Sharpened Ghost Pencil", player) and  ##player needs this for permit and id issued and going forward
+                           state.can_reach_location("Ghostwood Town Hall - Issued Permit", player))
     
     set_rule(world.get_location("Ghostwood Office Supply - Stapler"),
              lambda state: state.can_reach_location("Ghostwood Town Hall - Issued ID", player))
@@ -796,15 +797,15 @@ def set_location_rules(world: "WOLWorld") -> None:
     set_rule(world.get_location("Progressive Loot - 3rd Medical Container"),
              lambda state: state.has("Crowbar", player) or
                            state.has("Locks And How To Pick Them", player) or
-                           state.can_reach_region("Map Region D"))
+                           state.can_reach_region("Map Region D", player))
     set_rule(world.get_location("Progressive Loot - 6th Medical Container"),
              lambda state: state.has("Crowbar", player) or
                            state.has("Locks And How To Pick Them", player) or
-                           state.can_reach_region("Map Region D"))
+                           state.can_reach_region("Map Region D", player))
     set_rule(world.get_location("Progressive Loot - 9th Medical Container"),
              lambda state: state.has("Crowbar", player) or
                            state.has("Locks And How To Pick Them", player) or
-                           state.can_reach_region("Map Region D"))
+                           state.can_reach_region("Map Region D", player))
     set_rule(world.get_location("Progressive Loot - 5th El Vibrato Container"),
              lambda state: state.has("El Vibrato Transponder", player))
     set_rule(world.get_location("Progressive Loot - 7th El Vibrato Container"),
