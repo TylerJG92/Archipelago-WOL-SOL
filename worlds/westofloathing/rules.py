@@ -401,7 +401,8 @@ def set_location_rules(world: "WOLWorld") -> None:
                             state.has("Gustavson Gulch Treasure Cave Key (Spare)", player)))
     set_rule(world.get_location("Gustavson Gulch Destroyed - Dynamite Crate"),
              lambda state: (state.can_reach_region("Fort Alldead", player) and
-                            state.has("Toy Skeletons", player)))
+                            state.has("Toy Skeletons", player)) or
+                            state.has("Gustavson Gulch Treasure Cave Key", player))
     set_rule(world.get_location("Railroad Camp (East) - Rock Monster's Remains (Dr. Morton's Quest)"),
              lambda state: state.can_reach_region("Frisco", player))
     set_rule(world.get_location("Kaye Ridge Mine (Level 2) - Triangular Stones"),
