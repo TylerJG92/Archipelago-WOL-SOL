@@ -491,7 +491,8 @@ def set_location_rules(world: "WOLWorld") -> None:
                            state.can_reach_location("Ghostwood Town Hall - Issued Permit", player))
     
     set_rule(world.get_location("Ghostwood Office Supply - Stapler"),
-             lambda state: state.can_reach_location("Ghostwood Town Hall - Issued ID", player))
+             lambda state: state.can_reach_location("Ghostwood Town Hall - Issued ID", player) and
+                           state.has("Ghostwood Visitor's ID", player))
     
     set_rule(world.get_location("Ghostwood Jail - Stapled Report"),
              lambda state: state.can_reach_location("Ghostwood Office Supply - Stapler", player) and
