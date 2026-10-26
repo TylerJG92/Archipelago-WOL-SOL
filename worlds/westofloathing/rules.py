@@ -533,7 +533,7 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: state.has("Locks And How To Pick Them", player))
     set_rule(world.get_location("Alexandria Ranch Vault - Glass Case (Left)"),
              lambda state: state.has("Locks And How To Pick Them", player))
-    set_rule(world.get_location("Curly's Cairn - Under the Cairn"),
+    set_rule(world.get_location("Curly's Cairn (Alexandria Ranch) - Under the Cairn"),
              lambda state: state.has("Curly's Compass", player))
     set_rule(world.get_location("Roy Bean's House - Honey Bean"),
              lambda state: state.can_reach_region("Frisco", player))

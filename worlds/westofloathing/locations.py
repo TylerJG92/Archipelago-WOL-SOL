@@ -265,7 +265,7 @@ location_table: Dict[str, WOLLocationData] = {
     "Alexandria Ranch Vault - Glass Case (Middle)": WOLLocationData("Alexandria Ranch Vault", "Alexandria Ranch"),
     "Alexandria Ranch Vault - Glass Case (Left)": WOLLocationData("Alexandria Ranch Vault", "Alexandria Ranch"),
     #"Alexandria Ranch (Temporal Rift) - Alexandria Rescued": WOLLocationData("Alexandria Ranch"),
-    "Curly's Cairn - Under the Cairn": WOLLocationData("Alexandria Ranch", "Alexandria Ranch"),
+    "Curly's Cairn (Alexandria Ranch) - Under the Cairn": WOLLocationData("Alexandria Ranch", "Alexandria Ranch"),
     "Roy Bean's House - Spittoon": WOLLocationData("Roy Bean's House", "Roy Bean's House"),
     "Roy Bean's House - Honey Bean": WOLLocationData("Roy Bean's House", "Roy Bean's House"),
     "Jelly Bean Thieves' Hideout - Thieves Killed (Revolver)": WOLLocationData("Jelly Bean Thieves' Hideout", "Jelly Bean Thieves' Hideout"),
