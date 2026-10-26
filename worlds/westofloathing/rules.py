@@ -423,26 +423,26 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: state.has("Big Coil Of Barbed Wire", player))
     set_rule(world.get_location("Lost Dutch Oven Mine - Sluice"),
              lambda state: state.can_reach_region("Snakepit Mine", player))
-    set_rule(world.get_location("Lost Dutch Oven Mine (Level 1) - Lockers (Item 1)"),
+    set_rule(world.get_location("Lost Dutch Oven Mine (Level 1) [Stench Resistance] - Lockers (Item 1)"),
              lambda state: has_stench_resistance(state, world))
-    set_rule(world.get_location("Lost Dutch Oven Mine (Level 1) - Lockers (Item 2)"),
+    set_rule(world.get_location("Lost Dutch Oven Mine (Level 1) [Stench Resistance] - Lockers (Item 2)"),
              lambda state: has_stench_resistance(state, world))
-    set_rule(world.get_location("Lost Dutch Oven Mine (Level 1) - Spittoon"),
+    set_rule(world.get_location("Lost Dutch Oven Mine (Level 1) [Stench Resistance] - Spittoon"),
              lambda state: has_stench_resistance(state, world))
-    set_rule(world.get_location("Lost Dutch Oven Mine (Pit) - Emerald Rock"),
+    set_rule(world.get_location("Lost Dutch Oven Mine (Pit) [Stench Resistance] - Emerald Rock"),
              lambda state: (has_stench_resistance(state, world) and
                             state.has("Pickaxe", player)))
-    set_rule(world.get_location("El Vibrato Chamber (Lost Dutch Oven Mine) - Leftmost Box"),
+    set_rule(world.get_location("El Vibrato Chamber (Lost Dutch Oven Mine) [Stench Resistance] - Leftmost Box"),
              lambda state: (has_stench_resistance(state, world) and
                             has_elv_keystone_source(state, world)))
-    set_rule(world.get_location("El Vibrato Chamber (Lost Dutch Oven Mine) - Locked Box"),
+    set_rule(world.get_location("El Vibrato Chamber (Lost Dutch Oven Mine) [Stench Resistance] - Locked Box"),
              lambda state: (has_stench_resistance(state, world) and
                             has_elv_keystone_source(state, world)))
-    set_rule(world.get_location("El Vibrato Ruin (Lost Dutch Oven Mine) - Cylinder"),
+    set_rule(world.get_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder"),
              lambda state: (has_stench_resistance(state, world) and
                             has_elv_keystone_source(state, world) and
                             has_elv_battery_source(state, world)))
-    set_rule(world.get_location("Fort Alldead - Trash Can"),
+    set_rule(world.get_location("Fort Alldead [Stench Resistance] - Trash Can"),
              lambda state: has_stench_resistance(state, world))
     set_rule(world.get_location("Fort Alldead Barracks - Bottom-Right Footlocker"),
              lambda state: state.has("Locks And How To Pick Them", player))
@@ -525,7 +525,7 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: state.has("El Vibrato Transponder", player))
     set_rule(world.get_location("Military Cemetery - 2nd Lt. 69th Innuendo Div. (Combat)"),
              lambda state: state.has("Shovel", player))
-    set_rule(world.get_location("Fort Memoriam Barracks - Trash Pile"),
+    set_rule(world.get_location("Fort Memoriam Barracks [Stench Resistance] - Trash Pile"),
              lambda state: has_stench_resistance(state, world))
     set_rule(world.get_location("Alexandria Ranch Vault - Glass Case (Right)"),
              lambda state: state.has("Locks And How To Pick Them", player))
@@ -611,7 +611,7 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: state.has("Get Crackin': A Guide To Modern Safes", player))
     set_rule(world.get_location("Reboot Hill (Plot 3) - Paulette Tootsbury's Grave"),
              lambda state: state.has("Shovel", player))
-    set_rule(world.get_location("Reboot Hill (Plot 3) - Outhouse"),
+    set_rule(world.get_location("Reboot Hill (Plot 3) [Stench Resistance] - Outhouse"),
              lambda state: has_stench_resistance(state, world))
     set_rule(world.get_location("Reboot Hill (Plot 3) - Stanrietta Minkleston's Grave"),
              lambda state: state.has("Shovel", player))
@@ -827,7 +827,7 @@ def set_location_rules(world: "WOLWorld") -> None:
                             state.has("Shovel", player) and
                             state.can_reach_region("Gun Manor Art Gallery", player)))
 
-        set_rule(world.get_location("Back of Gun Manor - Compost Heap"),
+        set_rule(world.get_location("Back of Gun Manor [Stench Resistance] - Compost Heap"),
              lambda state: has_stench_resistance(state, world))
         set_rule(world.get_location("Gun Manor Carriage House - Lathe"),
              lambda state: state.has("Wobbly Billiards Cue", player))
