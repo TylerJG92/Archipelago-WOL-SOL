@@ -168,7 +168,7 @@ def set_region_rules(world: "WOLWorld") -> None:
     options = world.options
 
     world.get_entrance("Dirtwater -> Tony's Boots").access_rule = \
-        lambda state: ((state.can_reach_region("Fort of Darkness", player) or state.has("Mushroom Map", player)) and
+        lambda state: (state.can_reach_region("Fort of Darkness", player) and
                        state.has("A Bunch Of Really Small Guns", player))
     world.get_entrance("Dirtwater -> Murray's Curiosity & Bean").access_rule = \
         lambda state: can_save_murray(state, world)
