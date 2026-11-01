@@ -225,7 +225,7 @@ def set_region_rules(world: "WOLWorld") -> None:
 
     world.get_entrance("Curious Abandoned Well -> Curious Abandoned Well Facility").access_rule = \
         lambda state: (state.has("A Length Of Rope", player) and
-                       state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) - Cylinder", player) and
+                       state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder", player) and
                        state.has("El Vibrato Cylinder (Lost Dutch Oven Mine)", player))
 
     world.get_entrance("Postal Way Station -> Chuck's House").access_rule = \
@@ -757,7 +757,7 @@ def set_location_rules(world: "WOLWorld") -> None:
     set_rule(world.get_location("El Vibrato Control Center (Deepest Delve Mine) - El Vibrato Quest Completion"),
              lambda state: (state.has("Pickaxe", player) and
                             state.has("El Vibrato Cross", player) and
-                            state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) - Cylinder", player) and
+                            state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder", player) and
                             state.can_reach_region("Curious False Mountain", player) and
                             state.can_reach_region("Curious Flat Plain", player) and
                             state.has("El Vibrato Cylinder (Lost Dutch Oven Mine)", player) and
