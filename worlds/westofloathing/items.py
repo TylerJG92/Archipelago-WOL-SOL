@@ -469,7 +469,7 @@ item_table: Dict[str, WOLItemData] = {
     "Purple Grass": WOLItemData(ItemClassification.filler, {"Quest Items"}),
     "Pvt. Lemmon's Diary": WOLItemData(ItemClassification.filler, {"Quest Items"}),
     "Pvt. Matthau's Diary": WOLItemData(ItemClassification.filler, {"Quest Items"}),
-    "Remains Of The Potemkin Gang": WOLItemData(ItemClassification.progression, {"Quest Items"}),
+    #"Remains Of The Potemkin Gang": WOLItemData(ItemClassification.progression, {"Quest Items"}), #this item was added before when it was thought that you couldnt get this item normally with honorable on your character.
     "Right Half Of Curly's Map": WOLItemData(ItemClassification.progression, {"Quest Items"}),
     "Robe Receipt": WOLItemData(ItemClassification.progression, {"Quest Items", "Necromancer Clues"}),
     "Santa Cortada's Skull": WOLItemData(ItemClassification.progression, {"Quest Items"}),

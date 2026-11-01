@@ -170,15 +170,25 @@ def set_region_rules(world: "WOLWorld") -> None:
     world.get_entrance("Dirtwater -> Tony's Boots").access_rule = \
         lambda state: ((state.can_reach_region("Fort of Darkness", player) or state.has("Mushroom Map", player)) and
                        state.has("A Bunch Of Really Small Guns", player))
+    world.multiworld.register_indirect_condition("Fort of Darkness", "Dirtwater -> Tony's Boots")
     world.get_entrance("Dirtwater -> Murray's Curiosity & Bean").access_rule = \
         lambda state: can_save_murray(state, world)
+    world.multiworld.register_indirect_condition("Lost Dutch Oven Mine", "Dirtwater -> Murray's Curiosity & Bean")
+    world.multiworld.register_indirect_condition("Map Region C", "Dirtwater -> Murray's Curiosity & Bean")
+    world.multiworld.register_indirect_condition("Circus", "Dirtwater -> Murray's Curiosity & Bean")
+    world.multiworld.register_indirect_condition("Lazy-A Dude Ranch", "Dirtwater -> Murray's Curiosity & Bean")
+    world.multiworld.register_indirect_condition("Olive Garden's Homestead", "Dirtwater -> Murray's Curiosity & Bean")
+    if world.options.dlc_enabled:
+        world.multiworld.register_indirect_condition("Gun Manor Hedge Maze", "Dirtwater -> Murray's Curiosity & Bean")
     world.get_entrance("Dirtwater -> Grady's Fine Leather Goods").access_rule = \
         lambda state: (state.can_reach_region("Danny's Tannery", player) and
                        state.has("Tannery Back Door Key", player) and
                        state.has("Tannery St. Rage Key", player))
+    world.multiworld.register_indirect_condition("Danny's Tannery", "Dirtwater -> Grady's Fine Leather Goods")
     world.get_entrance("Dirtwater -> Alexandria's Bookstore").access_rule = \
         lambda state: (state.can_reach_region("Alexandria Ranch", player) and
                        state.has("Key-Shaped El Vibrato Device", player))
+    world.multiworld.register_indirect_condition("Alexandria Ranch", "Dirtwater -> Alexandria's Bookstore")
 
     world.get_entrance("Dirtwater -> The Perfessor's House").access_rule = \
         lambda state: state.has("Strange Stone Arrow", player)
@@ -391,7 +401,8 @@ def set_location_rules(world: "WOLWorld") -> None:
                             state.has("Gustavson Gulch Treasure Cave Key (Spare)", player)))
     set_rule(world.get_location("Gustavson Gulch Destroyed - Dynamite Crate"),
              lambda state: (state.can_reach_region("Fort Alldead", player) and
-                            state.has("Toy Skeletons", player)))
+                            state.has("Toy Skeletons", player)) or
+                            state.has("Gustavson Gulch Treasure Cave Key", player))
     set_rule(world.get_location("Railroad Camp (East) - Rock Monster's Remains (Dr. Morton's Quest)"),
              lambda state: state.can_reach_region("Frisco", player))
     set_rule(world.get_location("Kaye Ridge Mine (Level 2) - Triangular Stones"),
@@ -481,7 +492,8 @@ def set_location_rules(world: "WOLWorld") -> None:
                            state.can_reach_location("Ghostwood Town Hall - Issued Permit", player))
     
     set_rule(world.get_location("Ghostwood Office Supply - Stapler"),
-             lambda state: state.can_reach_location("Ghostwood Town Hall - Issued ID", player))
+             lambda state: state.can_reach_location("Ghostwood Town Hall - Issued ID", player) and
+                           state.has("Ghostwood Visitor's ID", player))
     
     set_rule(world.get_location("Ghostwood Jail - Stapled Report"),
              lambda state: state.can_reach_location("Ghostwood Office Supply - Stapler", player) and
