@@ -516,13 +516,17 @@ def set_location_rules(world: "WOLWorld") -> None:
     set_rule(world.get_location("El Vibrato Chamber (Soupstock Lode) - Chest"),
              lambda state: has_elv_keystone_source(state, world))
     set_rule(world.get_location("El Vibrato Chamber (Soupstock Lode) - Vending Machine KROKUZ CHOTAZAK"),
-             lambda state: state.has("El Vibrato Transponder", player))
+             lambda state: state.has("El Vibrato Transponder", player) and
+                           state.has("El Vibrato Fluid x5", player))
     set_rule(world.get_location("El Vibrato Chamber (Soupstock Lode) - Vending Machine KROKUZ GACHAKUZ"),
-             lambda state: state.has("El Vibrato Transponder", player))
+             lambda state: state.has("El Vibrato Transponder", player) and
+                           state.has("El Vibrato Fluid x5", player))
     set_rule(world.get_location("El Vibrato Chamber (Soupstock Lode) - Vending Machine KROKUZ NOHONOKSTA"),
-             lambda state: state.has("El Vibrato Transponder", player))
+             lambda state: state.has("El Vibrato Transponder", player) and
+                           state.has("El Vibrato Fluid x5", player))
     set_rule(world.get_location("El Vibrato Chamber (Soupstock Lode) - Vending Machine KROKUZ TASTA STAZAK"),
-             lambda state: state.has("El Vibrato Transponder", player))
+             lambda state: state.has("El Vibrato Transponder", player) and
+                           state.has("El Vibrato Fluid x5", player))
     set_rule(world.get_location("Military Cemetery - 2nd Lt. 69th Innuendo Div. (Combat)"),
              lambda state: state.has("Shovel", player))
     set_rule(world.get_location("Fort Memoriam Barracks [Stench Resistance] - Trash Pile"),
