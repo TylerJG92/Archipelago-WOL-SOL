@@ -168,27 +168,27 @@ def set_region_rules(world: "WOLWorld") -> None:
     options = world.options
 
     world.get_entrance("Dirtwater -> Tony's Boots").access_rule = \
-        lambda state: (state.can_reach_region("Fort of Darkness", player) and
+        lambda state: (state.can_reach_region("Fort of Darkness", player)and
                        state.has("A Bunch Of Really Small Guns", player))
-    world.multiworld.register_indirect_condition("Fort of Darkness", "Dirtwater -> Tony's Boots")
+    world.multiworld.register_indirect_condition(world.get_region("Fort of Darkness"), world.get_entrance("Dirtwater -> Tony's Boots"))
     world.get_entrance("Dirtwater -> Murray's Curiosity & Bean").access_rule = \
         lambda state: can_save_murray(state, world)
-    world.multiworld.register_indirect_condition("Lost Dutch Oven Mine", "Dirtwater -> Murray's Curiosity & Bean")
-    world.multiworld.register_indirect_condition("Map Region C", "Dirtwater -> Murray's Curiosity & Bean")
-    world.multiworld.register_indirect_condition("Circus", "Dirtwater -> Murray's Curiosity & Bean")
-    world.multiworld.register_indirect_condition("Lazy-A Dude Ranch", "Dirtwater -> Murray's Curiosity & Bean")
-    world.multiworld.register_indirect_condition("Olive Garden's Homestead", "Dirtwater -> Murray's Curiosity & Bean")
+    world.multiworld.register_indirect_condition(world.get_region("Lost Dutch Oven Mine"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
+    world.multiworld.register_indirect_condition(world.get_region("Map Region C"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
+    world.multiworld.register_indirect_condition(world.get_region("Circus"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
+    world.multiworld.register_indirect_condition(world.get_region("Lazy-A Dude Ranch"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
+    world.multiworld.register_indirect_condition(world.get_region("Olive Garden's Homestead"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
     if world.options.dlc_enabled:
-        world.multiworld.register_indirect_condition("Gun Manor Hedge Maze", "Dirtwater -> Murray's Curiosity & Bean")
+        world.multiworld.register_indirect_condition(world.get_region("Gun Manor Hedge Maze"), "Dirtwater -> Murray's Curiosity & Bean")
     world.get_entrance("Dirtwater -> Grady's Fine Leather Goods").access_rule = \
         lambda state: (state.can_reach_region("Danny's Tannery", player) and
                        state.has("Tannery Back Door Key", player) and
                        state.has("Tannery St. Rage Key", player))
-    world.multiworld.register_indirect_condition("Danny's Tannery", "Dirtwater -> Grady's Fine Leather Goods")
+    world.multiworld.register_indirect_condition(world.get_region("Danny's Tannery"), world.get_entrance("Dirtwater -> Grady's Fine Leather Goods"))
     world.get_entrance("Dirtwater -> Alexandria's Bookstore").access_rule = \
         lambda state: (state.can_reach_region("Alexandria Ranch", player) and
                        state.has("Key-Shaped El Vibrato Device", player))
-    world.multiworld.register_indirect_condition("Alexandria Ranch", "Dirtwater -> Alexandria's Bookstore")
+    world.multiworld.register_indirect_condition(world.get_region("Alexandria Ranch"), world.get_entrance("Dirtwater -> Alexandria's Bookstore"))
 
     world.get_entrance("Dirtwater -> The Perfessor's House").access_rule = \
         lambda state: state.has("Strange Stone Arrow", player)
