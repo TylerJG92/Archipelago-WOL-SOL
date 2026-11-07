@@ -324,7 +324,7 @@ item_table: Dict[str, WOLItemData] = {
     "Wobbly Billiards Cue": WOLItemData(ItemClassification.progression, {"Gear", "Melee"}, is_dlc=True),
     "Kellogg Grain Flakes": WOLItemData(ItemClassification.useful, {"Consumables", "Food"}),
     "Cheap Cigar": WOLItemData(ItemClassification.progression, {"Consumables", "Potions", "Stench Resistance"}, is_dlc=True),
-    "Can Of Kerosene": WOLItemData(ItemClassification.progression, {"Consumables", "Combat"}),
+    "Can Of Kerosene": WOLItemData(ItemClassification.filler, {"Consumables", "Combat"}),
     "1878 Nautical Almanac": WOLItemData(ItemClassification.progression, {"Books"}, is_dlc=True),
     "Advanced Beancraft": WOLItemData(ItemClassification.progression, {"Books"}, 8),
     "Advanced Cow Punchin'": WOLItemData(ItemClassification.useful, {"Books"}, 8),

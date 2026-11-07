@@ -268,7 +268,7 @@ def set_region_rules(world: "WOLWorld") -> None:
         lambda state: state.has("El Vibrato Transponder", player)
 
     world.get_entrance("Deepest Delve Mine -> Deepest Delve Mine (Elevator Fixed)").access_rule = \
-        lambda state: ((state.has("Can Of Kerosene", player) and state.has("Gas Cap", player)) or
+        lambda state: (state.has("Gas Cap", player) or
                        state.has("Percussive Maintenance", player))
 
     world.get_entrance("Miscellaneous -> Leatherworkery Crafting").access_rule = \
