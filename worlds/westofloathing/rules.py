@@ -232,11 +232,10 @@ def set_region_rules(world: "WOLWorld") -> None:
         lambda state: state.has("Chuck's Key", player)
 
     world.get_entrance("Roy Bean's House -> Ol' Granddad").access_rule = \
-        lambda state: state.has("Mint Mint Jellybeans", player)
+        lambda state: state.has("Progressive Jellybean", player, 1)
 
     world.get_entrance("Roy Bean's House -> Shroomcave").access_rule = \
-        lambda state: (state.has("Mint Mint Jellybeans", player) and
-                       state.has("Green Green Apple Jellybeans", player))
+        lambda state: state.has("Progressive Jellybean", player, 2)
 
     world.get_entrance("Madness Maw Mine -> El Vibrato Outpost (MMM)").access_rule = \
         lambda state: (state.has("Progressive El Vibrato Device", player, 2) and
@@ -549,7 +548,7 @@ def set_location_rules(world: "WOLWorld") -> None:
     set_rule(world.get_location("Alexandria Ranch Vault - Glass Case (Left)"),
              lambda state: state.has("Locks And How To Pick Them", player))
     set_rule(world.get_location("Curly's Cairn (Alexandria Ranch) - Under the Cairn"),
-             lambda state: state.has("Curly's Compass", player))
+             lambda state: state.has("Progressive Curly's Meat", player, 1))
     set_rule(world.get_location("Roy Bean's House - Honey Bean"),
              lambda state: state.can_reach_region("Frisco", player))
     set_rule(world.get_location("Jelly Bean Thieves' Hideout - Crate Beside Bed"),
@@ -656,9 +655,9 @@ def set_location_rules(world: "WOLWorld") -> None:
     set_rule(world.get_location("Madness Maw Mine (Level 2) - Bean-Iron Deposit"),
              lambda state: state.has("Beans Illustrated", player) and state.has("Pickaxe", player))
     set_rule(world.get_location("Madness Maw Mine (Curly's Cave) - Nightstand"),
-             lambda state: state.has("Curly's Auto-Gyrotheodolite", player) and state.has("Pickaxe", player))
+             lambda state: state.has("Progressive Curly's Meat", player, 2) and state.has("Pickaxe", player))
     set_rule(world.get_location("Madness Maw Mine (Curly's Cave) - Pie Safe"),
-             lambda state: state.has("Curly's Auto-Gyrotheodolite", player) and state.has("Pickaxe", player))
+             lambda state: state.has("Progressive Curly's Meat", player, 2) and state.has("Pickaxe", player))
     set_rule(world.get_location("Madness Maw Mine (Level 4) - Bean-Iron Deposit"),
              lambda state: state.has("Beans Illustrated", player) and state.has("Pickaxe", player))
     set_rule(world.get_location("Kellogg Ranch (Main Building) - Loose Floorboard"),
@@ -761,11 +760,9 @@ def set_location_rules(world: "WOLWorld") -> None:
                             state.can_reach_region("Curious Flat Plain", player) and
                             state.has("Progressive El Vibrato Cylinder", player, 3)))
     set_rule(world.get_location("Halloway's Hideaway - Half of Curly's Map"),
-             lambda state: (state.has("Left Half Of Curly's Map", player) and
-                            state.has("Halloway's Pin", player)))
+             lambda state: (state.has("Progressive Curly's Meat", player, 4)))
     set_rule(world.get_location("Halloway's Hideaway - X Marks the Spot"),
-             lambda state: (state.has("Left Half Of Curly's Map", player) and
-                            state.has("Right Half Of Curly's Map", player) and
+             lambda state: (state.has("Progressive Curly's Meat", player, 5) and
                             state.has("Shovel", player)))
 
     set_rule(world.get_location("Random Encounter (Region A) - Murder Pepper (Chef Quest)"),
