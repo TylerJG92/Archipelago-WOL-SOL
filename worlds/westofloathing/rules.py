@@ -104,31 +104,29 @@ def has_cold_resistance(state: CollectionState, world: "WOLWorld") -> bool:
             #Can also get it from Beer-Battered Hot Dogs but those are easily missable and would be a pain for logic
            )
 
-def has_elv_keystone_source(state: CollectionState, world: "WOLWorld") -> bool:
-    player = world.player
+# This shouldnt be needed anymore once I finish with the Progressive El Vibrato Device since the player will now get access to the perfessors house before the transponder
+#def has_elv_keystone_source(state: CollectionState, world: "WOLWorld") -> bool:
+    #player = world.player
 
     #Can also farm these in the Lost Dutch Oven Mine chamber (infinite El Vibrato combat), but it requires a keystone to get in
-    return (
-            state.has("El Vibrato Transponder", player) and
-            (
-             state.can_reach_region("The Perfessor's House", player) or
-             state.can_reach_region("Map Region D", player) or #Can farm them in the Curious Abandoned Well or from Region D/E encounters
-             state.can_reach_region("Map Region E", player)
-            )
-           )
+    #return (
+            #state.has("El Vibrato Transponder", player) and
+            #(
+             #state.can_reach_region("The Perfessor's House", player) or
+             #state.can_reach_region("Map Region D", player) or #Can farm them in the Curious Abandoned Well or from Region D/E encounters
+             #state.can_reach_region("Map Region E", player)
+            #)
+           #)
 
 def has_elv_battery_source(state: CollectionState, world: "WOLWorld") -> bool:
     player = world.player
 
     return (
             (
-             state.can_reach_region("The Perfessor's House", player) and
-             state.has("El Vibrato Transponder", player) and
-             state.has("El Vibrato Device", player)
+             state.has("Progressive El Vibrato Device", player, 3) # The 3rd item is now the "device" that give batteries when given to the perfessor, first is unlocking the perfessors house and the second is the transponder.
             ) or
             ( #Can farm them in the Curious Abandoned Well or from Region D encounters
-             state.can_reach_region("Map Region D", player) and
-             state.has("El Vibrato Transponder", player)
+             state.can_reach_region("Curious Abandoned Well", player) #since transponder is required to get to here and is required anyway to get batteries from regions D & E, might as well see if the player can get here instead.
             )
            )
 
@@ -144,7 +142,7 @@ def can_get_breadwood_lumber(state: CollectionState, world: "WOLWorld") -> bool:
               state.has("Half A Ton Of Yeast", player) +
               state.has("Forty Loaves Of Bread", player) +
               state.has("Overdue Breadwood Book", player) +
-              (state.has("Overdue Breadwood Book x5", player) and
+              (state.has("Breadwood Bread Bowl x5", player) and
                state.can_reach_region("Soupstock Lode", player) and
                (state.has("Monkey Wrench", player) or state.has("Percussive Maintenance", player)) #and
                #has_hot_resistance(state, world)) #This IS a requirement but basically short circuits because you can farm it in soupstock lode
@@ -191,7 +189,7 @@ def set_region_rules(world: "WOLWorld") -> None:
     world.multiworld.register_indirect_condition(world.get_region("Alexandria Ranch"), world.get_entrance("Dirtwater -> Alexandria's Bookstore"))
 
     world.get_entrance("Dirtwater -> The Perfessor's House").access_rule = \
-        lambda state: state.has("Strange Stone Arrow", player)
+        lambda state: state.has("Progressive El Vibrato Device", player, 1)
 
     #Bounty regions don't really have any hard requirements - even for the ones that need items for the peaceful resolution,
     #you can always just kill 'em, so by default there's the option for basically free progression up to the pickle factory
@@ -219,9 +217,9 @@ def set_region_rules(world: "WOLWorld") -> None:
                        state.has("Locks And How To Pick Them", player))
 
     world.get_entrance("Map Region D -> Curious Copse").access_rule = \
-        lambda state: state.has("El Vibrato Transponder", player)
+        lambda state: state.has("Progressive El Vibrato Device", player, 2)
     world.get_entrance("Map Region D -> Curious Abandoned Well").access_rule = \
-        lambda state: state.has("El Vibrato Transponder", player)
+        lambda state: state.has("Progressive El Vibrato Device", player, 2)
 
     world.get_entrance("Curious Abandoned Well -> Curious Abandoned Well Facility").access_rule = \
         lambda state: (state.has("A Length Of Rope", player) and
@@ -241,7 +239,7 @@ def set_region_rules(world: "WOLWorld") -> None:
                        state.has("Green Green Apple Jellybeans", player))
 
     world.get_entrance("Madness Maw Mine -> El Vibrato Outpost (MMM)").access_rule = \
-        lambda state: (state.has("El Vibrato Transponder", player) and
+        lambda state: (state.has("Progressive El Vibrato Device", player, 2) and
                        state.has("Pickaxe", player))
 
     world.get_entrance("Railroad Camp (West) -> Necromancer's Tower").access_rule = \
@@ -263,9 +261,9 @@ def set_region_rules(world: "WOLWorld") -> None:
         lambda state: state.has("Interesting Rock", player)
 
     world.get_entrance("Map Region H -> Curious False Mountain").access_rule = \
-        lambda state: state.has("El Vibrato Transponder", player)
+        lambda state: state.has("Progressive El Vibrato Device", player, 2)
     world.get_entrance("Map Region H -> Curious Flat Plain").access_rule = \
-        lambda state: state.has("El Vibrato Transponder", player)
+        lambda state: state.has("Progressive El Vibrato Device", player, 2)
 
     world.get_entrance("Deepest Delve Mine -> Deepest Delve Mine (Elevator Fixed)").access_rule = \
         lambda state: (state.has("Gas Cap", player) or
@@ -446,13 +444,13 @@ def set_location_rules(world: "WOLWorld") -> None:
                             state.has("Pickaxe", player)))
     set_rule(world.get_location("El Vibrato Chamber (Lost Dutch Oven Mine) [Stench Resistance] - Leftmost Box"),
              lambda state: (has_stench_resistance(state, world) and
-                            has_elv_keystone_source(state, world)))
+                            state.has("Progressive El Vibrato Device", player, 2)))
     set_rule(world.get_location("El Vibrato Chamber (Lost Dutch Oven Mine) [Stench Resistance] - Locked Box"),
              lambda state: (has_stench_resistance(state, world) and
-                            has_elv_keystone_source(state, world)))
+                            state.has("Progressive El Vibrato Device", player, 2)))
     set_rule(world.get_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder"),
              lambda state: (has_stench_resistance(state, world) and
-                            has_elv_keystone_source(state, world) and
+                            state.has("Progressive El Vibrato Device", player, 2) and
                             has_elv_battery_source(state, world)))
     set_rule(world.get_location("Fort Alldead [Stench Resistance] - Trash Can"),
              lambda state: has_stench_resistance(state, world))
@@ -527,18 +525,18 @@ def set_location_rules(world: "WOLWorld") -> None:
     set_rule(world.get_location("Soupstock Lode (Level 1) - Bean-Iron Deposit (Bottom Left)"),
              lambda state: state.has("Beans Illustrated", player) and state.has("Pickaxe", player))
     set_rule(world.get_location("El Vibrato Chamber (Soupstock Lode) - Chest"),
-             lambda state: has_elv_keystone_source(state, world))
+             lambda state: state.has("Progressive El Vibrato Device", player, 2))
     set_rule(world.get_location("El Vibrato Chamber (Soupstock Lode) - Vending Machine KROKUZ CHOTAZAK"),
-             lambda state: state.has("El Vibrato Transponder", player) and
+             lambda state: state.has("Progressive El Vibrato Device", player, 2) and
                            state.has("El Vibrato Fluid x5", player))
     set_rule(world.get_location("El Vibrato Chamber (Soupstock Lode) - Vending Machine KROKUZ GACHAKUZ"),
-             lambda state: state.has("El Vibrato Transponder", player) and
+             lambda state: state.has("Progressive El Vibrato Device", player, 2) and
                            state.has("El Vibrato Fluid x5", player))
     set_rule(world.get_location("El Vibrato Chamber (Soupstock Lode) - Vending Machine KROKUZ NOHONOKSTA"),
-             lambda state: state.has("El Vibrato Transponder", player) and
+             lambda state: state.has("Progressive El Vibrato Device", player, 2) and
                            state.has("El Vibrato Fluid x5", player))
     set_rule(world.get_location("El Vibrato Chamber (Soupstock Lode) - Vending Machine KROKUZ TASTA STAZAK"),
-             lambda state: state.has("El Vibrato Transponder", player) and
+             lambda state: state.has("Progressive El Vibrato Device", player, 2) and
                            state.has("El Vibrato Fluid x5", player))
     set_rule(world.get_location("Military Cemetery - 2nd Lt. 69th Innuendo Div. (Combat)"),
              lambda state: state.has("Shovel", player))
@@ -601,17 +599,17 @@ def set_location_rules(world: "WOLWorld") -> None:
     set_rule(world.get_location("El Vibrato Construction Facility (Curious Copse) - BUGAANZEVE"),
              lambda state: (has_stench_resistance(state, world) and #In addition to getting to Curious Copse, need to activate machine in El Vibrato Ruin
                             state.has("Percussive Maintenance", player) and
-                            has_elv_keystone_source(state, world) and
+                            state.has("Progressive El Vibrato Device", player, 2) and
                             has_elv_battery_source(state, world)))
     set_rule(world.get_location("El Vibrato Construction Facility (Curious Copse) - HOSOM NOAN NOFU"),
              lambda state: (has_stench_resistance(state, world) and #In addition to getting to Curious Copse, need to activate machine in El Vibrato Ruin
                             state.has("Percussive Maintenance", player) and
-                            has_elv_keystone_source(state, world) and
+                            state.has("Progressive El Vibrato Device", player, 2) and
                             has_elv_battery_source(state, world)))
     set_rule(world.get_location("Curious Abandoned Well Facility (Secondary Storage) - Top Chest"),
-             lambda state: has_elv_keystone_source(state, world))
+             lambda state: state.has("Progressive El Vibrato Device", player, 2))
     set_rule(world.get_location("Curious Abandoned Well Facility (Secondary Storage) - Bottom Chest"),
-             lambda state: has_elv_keystone_source(state, world))
+             lambda state: state.has("Progressive El Vibrato Device", player, 2))
     set_rule(world.get_location("Reboot Hill (Plot 1) - Wise Ol' Jed Marmot's Grave"),
              lambda state: state.has("Shovel", player))
     set_rule(world.get_location("Reboot Hill (Plot 1) - Big Bob Hurlingham's Grave"),
@@ -712,11 +710,11 @@ def set_location_rules(world: "WOLWorld") -> None:
                             state.has("Interesting Rock", player) and
                             state.has("Weird Rock Sample", player)))
     set_rule(world.get_location("El Vibrato Storage Room (Abandoned Mine) - Card Table (Item 1)"),
-             lambda state: state.has("El Vibrato Transponder", player) and state.has("Pickaxe", player))
+             lambda state: state.has("Progressive El Vibrato Device", player, 2) and state.has("Pickaxe", player))
     set_rule(world.get_location("El Vibrato Storage Room (Abandoned Mine) - Card Table (Item 2)"),
-             lambda state: state.has("El Vibrato Transponder", player) and state.has("Pickaxe", player))
+             lambda state: state.has("Progressive El Vibrato Device", player, 2) and state.has("Pickaxe", player))
     set_rule(world.get_location("El Vibrato Storage Room (Abandoned Mine) - Cylinder"),
-             lambda state: state.has("El Vibrato Transponder", player) and state.has("Pickaxe", player))
+             lambda state: state.has("Progressive El Vibrato Device", player, 2) and state.has("Pickaxe", player))
     set_rule(world.get_location("Morton's Quarry (Tiny Diverticulum) - Hex Puzzle"),
              lambda state: (state.can_reach_region("Frisco", player) and
                             state.can_reach_region("Dr. Morton's House", player) and
@@ -824,17 +822,17 @@ def set_location_rules(world: "WOLWorld") -> None:
                            state.has("Locks And How To Pick Them", player) or
                            state.can_reach_region("Map Region D", player))
     set_rule(world.get_location("Progressive Loot - 5th El Vibrato Container"),
-             lambda state: state.has("El Vibrato Transponder", player))
+             lambda state: state.has("Progressive El Vibrato Device", player, 2))
     set_rule(world.get_location("Progressive Loot - 7th El Vibrato Container"),
-             lambda state: state.has("El Vibrato Transponder", player))
+             lambda state: state.has("Progressive El Vibrato Device", player, 2))
     set_rule(world.get_location("Progressive Loot - 9th El Vibrato Container"),
-             lambda state: state.has("El Vibrato Transponder", player))
+             lambda state: state.has("Progressive El Vibrato Device", player, 2))
     set_rule(world.get_location("Progressive Loot - 11th El Vibrato Container"),
-             lambda state: state.has("El Vibrato Transponder", player))
+             lambda state: state.has("Progressive El Vibrato Device", player, 2))
     set_rule(world.get_location("Progressive Loot - 13th El Vibrato Container"),
-             lambda state: state.has("El Vibrato Transponder", player))
+             lambda state: state.has("Progressive El Vibrato Device", player, 2))
     set_rule(world.get_location("Progressive Loot - 15th El Vibrato Container"),
-             lambda state: state.has("El Vibrato Transponder", player))
+             lambda state: state.has("Progressive El Vibrato Device", player, 2))
 
     if options.dlc_enabled:
         set_rule(world.get_location("Desert House - Macready's Grave"),
