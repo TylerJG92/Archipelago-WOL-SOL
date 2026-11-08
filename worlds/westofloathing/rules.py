@@ -224,7 +224,7 @@ def set_region_rules(world: "WOLWorld") -> None:
     world.get_entrance("Curious Abandoned Well -> Curious Abandoned Well Facility").access_rule = \
         lambda state: (state.has("A Length Of Rope", player) and
                        state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder", player) and
-                       state.has("El Vibrato Cylinder (Lost Dutch Oven Mine)", player))
+                       state.has("Progressive El Vibrato Cylinder", player, 1))
 
     world.get_entrance("Postal Way Station -> Chuck's House").access_rule = \
         lambda state: state.has("Postal Code Sheet", player)
@@ -746,11 +746,11 @@ def set_location_rules(world: "WOLWorld") -> None:
     set_rule(world.get_location("Jeweler's Cabin - Spectacles"),
              lambda state: state.can_reach_region("Fort Unnecessary", player))
     set_rule(world.get_location("El Vibrato Chamber (Curious False Mountain) - Chronokey Fabrication"),
-             lambda state: state.has("El Vibrato Cylinder (Curious False Mountain)", player,))
+             lambda state: state.has("Progressive El Vibrato Cylinder", player, 3))
     set_rule(world.get_location("Alamo Rent-A-Mule - Rented a Mule"),
              lambda state: state.can_reach_region("Fort Unnecessary", player))
     set_rule(world.get_location("Curious Flat Plain - Garbage Return"),
-             lambda state: state.has("El Vibrato Cylinder (Curious Flat Plain)", player,))
+             lambda state: state.has("Progressive El Vibrato Cylinder", player, 2))
     set_rule(world.get_location("Deepest Delve Mine (Alt Entrance) - Bean-Iron Deposit"),
              lambda state: state.has("Beans Illustrated", player) and state.has("Pickaxe", player))
     set_rule(world.get_location("El Vibrato Control Center (Deepest Delve Mine) - El Vibrato Quest Completion"),
@@ -759,9 +759,7 @@ def set_location_rules(world: "WOLWorld") -> None:
                             state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder", player) and
                             state.can_reach_region("Curious False Mountain", player) and
                             state.can_reach_region("Curious Flat Plain", player) and
-                            state.has("El Vibrato Cylinder (Lost Dutch Oven Mine)", player) and
-                            state.has("El Vibrato Cylinder (Curious False Mountain)", player) and
-                            state.has("El Vibrato Cylinder (Curious Flat Plain)", player)))
+                            state.has("Progressive El Vibrato Cylinder", player, 3)))
     set_rule(world.get_location("Halloway's Hideaway - Half of Curly's Map"),
              lambda state: (state.has("Left Half Of Curly's Map", player) and
                             state.has("Halloway's Pin", player)))
