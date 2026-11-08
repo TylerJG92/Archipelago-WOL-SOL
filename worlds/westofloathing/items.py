@@ -342,7 +342,7 @@ item_table: Dict[str, WOLItemData] = {
     "Get Crackin': A Guide To Modern Safes": WOLItemData(ItemClassification.progression, {"Books"}),
     "Gold Medal Silversmithing": WOLItemData(ItemClassification.filler, {"Books"}),
     "Hedging Your Bets": WOLItemData(ItemClassification.useful, {"Books"}, is_dlc=True),
-    "How To \"Cheat\" At \"Poker\"": WOLItemData(ItemClassification.useful, {"Books"}),
+    "How To \"Cheat\" At \"Poker\"": WOLItemData(ItemClassification.progression, {"Books"}),
     "Kickin' Ass And Chewin' Gum": WOLItemData(ItemClassification.filler, {"Books"}),
     "Locks And How To Pick Them": WOLItemData(ItemClassification.progression, {"Books"}),
     "Mind Your Meat": WOLItemData(ItemClassification.progression, {"Books"}),

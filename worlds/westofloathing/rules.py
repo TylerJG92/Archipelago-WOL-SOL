@@ -352,12 +352,14 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: state.has("5000 Meat", player) or              
                            state.can_reach_location("Circus - Survived the Main Act", player) or
                            state.can_reach_region("Buffalo Pile", player) or
-                           state.can_reach_region("Hellstrom Ranch", player))
+                           state.can_reach_region("Hellstrom Ranch", player) or
+                           state.has("How To \"Cheat\" At \"Poker\"", player))
     set_rule(world.get_location("Dynamite Dan's - Item 1"),
              lambda state: state.has("5000 Meat", player) or              
                            state.can_reach_location("Circus - Survived the Main Act", player) or
                            state.can_reach_region("Buffalo Pile", player) or
-                           state.can_reach_region("Hellstrom Ranch", player))
+                           state.can_reach_region("Hellstrom Ranch", player) or
+                           state.has("How To \"Cheat\" At \"Poker\"", player))
 
     set_rule(world.get_location("Danny's Tannery (St. Rage Shed) - Grady's Cowsbane Seeds"),
              lambda state: (state.has("Tannery Back Door Key", player) and
