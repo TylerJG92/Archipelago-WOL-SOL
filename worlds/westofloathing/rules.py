@@ -346,6 +346,18 @@ def set_location_rules(world: "WOLWorld") -> None:
 
     set_rule(world.get_location("Silversmith's House - Safe"),
              lambda state: state.has("Get Crackin': A Guide To Modern Safes", player))
+    
+    #While the player can get these items with a lot of grinding I felt that it would be better if they were gated by better grind methods or reciving half needed from the apworld
+    set_rule(world.get_location("The Silver Plater - Plated the Turnip"), 
+             lambda state: state.has("5000 Meat", player) or              
+                           state.can_reach_location("Circus - Survived the Main Act", player) or
+                           state.can_reach_region("Buffalo Pile", player) or
+                           state.can_reach_region("Hellstrom Ranch", player))
+    set_rule(world.get_location("Dynamite Dan's - Item 1"),
+             lambda state: state.has("5000 Meat", player) or              
+                           state.can_reach_location("Circus - Survived the Main Act", player) or
+                           state.can_reach_region("Buffalo Pile", player) or
+                           state.can_reach_region("Hellstrom Ranch", player))
 
     set_rule(world.get_location("Danny's Tannery (St. Rage Shed) - Grady's Cowsbane Seeds"),
              lambda state: (state.has("Tannery Back Door Key", player) and

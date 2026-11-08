@@ -593,7 +593,10 @@ item_table: Dict[str, WOLItemData] = {
     "Can Of Oil": WOLItemData(ItemClassification.filler, {"Miscellany"}, extras_eligible=True),
     "Packet Of Cowsbane Seeds": WOLItemData(ItemClassification.progression, {"Quest Items"}),
     "Lactarius Dirtihippica mushroom x4": WOLItemData(ItemClassification.progression, {"Consumables", "Food", "Quest Items"}),
-    "Silver-Toothed Skull": WOLItemData(ItemClassification.useful, {"Quest Items"})
+    "Silver-Toothed Skull": WOLItemData(ItemClassification.useful, {"Quest Items"}),
+    "5000 Meat": WOLItemData(ItemClassification.progression_deprioritized, {"Currency"}, 2),
+    "1000 Meat": WOLItemData(ItemClassification.useful, {"Currency"}, 3),
+    "100 Meat": WOLItemData(ItemClassification.filler, {"Currency"}, 5, extras_eligible=True),
 }
 
 starting_gear_list: List[str] = [name for name, data in item_table.items() if data.default_starting_gear]
@@ -623,7 +626,8 @@ item_categories = {
     "Necromancer Clues",
     "Stench Resistance",
     "Hot Resistance",
-    "Cold Resistance"
+    "Cold Resistance",
+    "Currency"
 }
 
 item_name_groups: Dict[str, Set[str]] = {}
