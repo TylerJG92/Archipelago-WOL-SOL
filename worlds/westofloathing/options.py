@@ -34,6 +34,15 @@ class UnbreakableTools(Toggle):
     internal_name = "unbreakable_tools"
     display_name = "Unbreakable Tools"
 
+class Deathlink(Toggle):
+    """
+    Allows for the sending and recieving of Deathlink packets:
+    Recieving: The players character gains the Angry effect
+    Sending: Whenever the player fails a combat they send a deathlink
+    """
+    internal_name = "deathlink_enabled"
+    display_name = "Deathlink"
+
 @dataclass
 class WOLOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
@@ -42,6 +51,7 @@ class WOLOptions(PerGameCommonOptions):
     randomize_ghost_coach: RandomizeGunManorCoach
     randomize_goblintongue: RandomizeGoblintongue
     unbreakable_tools: UnbreakableTools
+    deathlink_enabled: Deathlink
 
 wol_option_groups = [
     # OptionGroup("Logic Options", [

@@ -125,7 +125,8 @@ class WOLWorld(World):
             "dlc_enabled": self.options.dlc_enabled.value,
             "randomize_ghost_coach": self.options.randomize_ghost_coach.value,
             "randomize_goblintongue": self.options.randomize_goblintongue.value,
-            "unbreakable_tools": self.options.unbreakable_tools.value
+            "unbreakable_tools": self.options.unbreakable_tools.value,
+            "deathlink_enabled": self.options.deathlink_enabled.value
         }
 
         return slot_data
