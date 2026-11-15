@@ -610,15 +610,13 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: (state.has("Unstable Stick Of Dynamite", player) and
                             state.has("Bag Of Grease", player)))
     set_rule(world.get_location("El Vibrato Construction Facility (Curious Copse) - BUGAANZEVE"),
-             lambda state: (has_stench_resistance(state, world) and #In addition to getting to Curious Copse, need to activate machine in El Vibrato Ruin
-                            state.has("Percussive Maintenance", player) and
-                            state.has("Progressive El Vibrato Device", player, 2) and
-                            has_elv_battery_source(state, world)))
+             lambda state: (state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder") and 
+                            state.has("Progressive El Vibrato Cylinder", player, 1) and
+                            state.has("Progressive El Vibrato Device", player, 2)))
     set_rule(world.get_location("El Vibrato Construction Facility (Curious Copse) - HOSOM NOAN NOFU"),
-             lambda state: (has_stench_resistance(state, world) and #In addition to getting to Curious Copse, need to activate machine in El Vibrato Ruin
-                            state.has("Percussive Maintenance", player) and
-                            state.has("Progressive El Vibrato Device", player, 2) and
-                            has_elv_battery_source(state, world)))
+             lambda state: (state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder") and 
+                            state.has("Progressive El Vibrato Cylinder", player, 1) and
+                            state.has("Progressive El Vibrato Device", player, 2)))
     set_rule(world.get_location("Curious Abandoned Well Facility (Secondary Storage) - Top Chest"),
              lambda state: state.has("Progressive El Vibrato Device", player, 2))
     set_rule(world.get_location("Curious Abandoned Well Facility (Secondary Storage) - Bottom Chest"),
