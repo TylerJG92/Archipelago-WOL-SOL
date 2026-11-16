@@ -597,6 +597,7 @@ item_table: Dict[str, WOLItemData] = {
     "5000 Meat": WOLItemData(ItemClassification.progression_deprioritized, {"Currency"}, 2),
     "1000 Meat": WOLItemData(ItemClassification.useful, {"Currency"}, 3),
     "100 Meat": WOLItemData(ItemClassification.filler, {"Currency"}, 5, extras_eligible=True),
+    "Stardust": WOLItemData(ItemClassification.progression, {"Consumables", "Potions"})
 }
 
 starting_gear_list: List[str] = [name for name, data in item_table.items() if data.default_starting_gear]

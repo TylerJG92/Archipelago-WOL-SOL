@@ -381,7 +381,8 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: (state.has("Gore-Splattered Scroll", player) and
                             state.has("Human Ashes x2", player) and
                             state.has("Glass Sphere", player) and
-                            state.has("Pickaxe", player))) #For mining stardust
+                            (state.has("Stardust", player) or
+                             state.has("Pickaxe", player))))# for mining stardust
     set_rule(world.get_location("Fort Cowardice Back Office - General Gob's Hat"),
              lambda state: state.has("Locks And How To Pick Them", player))
     set_rule(world.get_location("Fort Cowardice Back Office - General Gob's Pistol"),
