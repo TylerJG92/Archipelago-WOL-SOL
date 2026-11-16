@@ -902,6 +902,8 @@ def set_location_rules(world: "WOLWorld") -> None:
                             state.has("Geometry Textbook", player)))
         set_rule(world.get_location("Gun Manor Nursery - Crib"),
              lambda state: state.has("Blank Sheet Music", player))
+        set_rule(world.get_location("Mr. Gun's Manliness Room - Booze Cart"),
+             lambda state: state.has("Shower Curtain", player))
 
         set_rule(world.get_location("Magic-Infused Leaf Crafting - 3 Leaves"),
                  lambda state: state.can_reach_region("Gun Manor Hedge Maze", player))
