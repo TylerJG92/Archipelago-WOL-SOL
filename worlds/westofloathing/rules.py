@@ -758,6 +758,10 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: state.can_reach_region("Fort Unnecessary", player))
     set_rule(world.get_location("El Vibrato Chamber (Curious False Mountain) - Chronokey Fabrication"),
              lambda state: state.has("Progressive El Vibrato Cylinder", player, 3))
+    set_rule(world.get_location("El Vibrato Chamber (Curious False Mountain) - TIMESQUEEZE Cowsbane Seeds"),
+             lambda state: state.has("Packet Of Cowsbane Seeds", player) and
+                          (state.can_reach_location("Lazy-A Dude Ranch - Cowsbane Harvest", player) or
+                           state.has("Progressive El Vibrato Cylinder", player, 3)))
     set_rule(world.get_location("Alamo Rent-A-Mule - Rented a Mule"),
              lambda state: state.can_reach_region("Fort Unnecessary", player))
     set_rule(world.get_location("Curious Flat Plain - Garbage Return"),

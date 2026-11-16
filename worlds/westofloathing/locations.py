@@ -414,6 +414,7 @@ location_table: Dict[str, WOLLocationData] = {
     "Jeweler's Cabin - Diorite": WOLLocationData("Jeweler's Cabin", "Jeweler's Cabin"),
     "Jeweler's Cabin - Spectacles": WOLLocationData("Jeweler's Cabin", "Jeweler's Cabin"),
     "El Vibrato Chamber (Curious False Mountain) - Chronokey Fabrication": WOLLocationData("Curious False Mountain", "Curious False Mountain"),
+    "El Vibrato Chamber (Curious False Mountain) - TIMESQUEEZE Cowsbane Seeds": WOLLocationData("Curious False Maountain", "Curious False Mountain"),
     "Alamo Rent-A-Mule - Rented a Mule": WOLLocationData("Alamo Rent-A-Mule", "Alamo Rent-A-Mule"),
     "Curious Flat Plain - Explorer Skeleton": WOLLocationData("Curious Flat Plain", "Curious Flat Plain"),
     "Curious Flat Plain - Garbage Return": WOLLocationData("Curious Flat Plain", "Curious Flat Plain"),
