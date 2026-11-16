@@ -856,6 +856,10 @@ def set_location_rules(world: "WOLWorld") -> None:
 
         set_rule(world.get_location("Back of Gun Manor [Stench Resistance] - Compost Heap"),
              lambda state: has_stench_resistance(state, world))
+        set_rule(world.get_location("Gun Manor Hedge Maze - Tea Leaf Bush"),
+             lambda state: state.has("Tea Service", player))
+        set_rule(world.get_location("Gun Manor Cellar - Boiler Spout"),
+             lambda state: state.has("Tea Service (With Tea Leaves)", player))
         set_rule(world.get_location("Gun Manor Carriage House - Lathe"),
              lambda state: state.has("Wobbly Billiards Cue", player))
         set_rule(world.get_location("Gun Manor Visitor Center - Photo"),

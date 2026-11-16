@@ -479,6 +479,8 @@ item_table: Dict[str, WOLItemData] = {
     "Tannery Back Door Key": WOLItemData(ItemClassification.progression, {"Quest Items"}),
     "Tannery St. Rage Key": WOLItemData(ItemClassification.progression, {"Quest Items"}),
     "Tea Service": WOLItemData(ItemClassification.progression, {"Quest Items"}, is_dlc=True),
+    "Tea Service (With Tea Leaves)": WOLItemData(ItemClassification.progression, {"Quest Items"}, is_dlc=True),
+    "Tea Service (With Tea)": WOLItemData(ItemClassification.progression, {"Quest Items"}, is_dlc=True),
     "Tiny Stick Of Dynamite": WOLItemData(ItemClassification.progression, {"Quest Items"}, is_dlc=True),
     "Toy Skeletons": WOLItemData(ItemClassification.progression, {"Quest Items"}),
     "Unstable Stick Of Dynamite": WOLItemData(ItemClassification.progression, {"Quest Items"}),
