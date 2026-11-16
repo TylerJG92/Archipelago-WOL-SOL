@@ -858,7 +858,7 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: has_stench_resistance(state, world))
         set_rule(world.get_location("Gun Manor Hedge Maze - Tea Leaf Bush"),
              lambda state: state.has("Tea Service", player))
-        set_rule(world.get_location("Gun Manor Cellar - Boiler Spout"),
+        set_rule(world.get_location("Gun Manor Boiler Room - Boiler Spout"),
              lambda state: state.has("Tea Service (With Tea Leaves)", player))
         set_rule(world.get_location("Gun Manor Carriage House - Lathe"),
              lambda state: state.has("Wobbly Billiards Cue", player))
