@@ -611,11 +611,11 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: (state.has("Unstable Stick Of Dynamite", player) and
                             state.has("Bag Of Grease", player)))
     set_rule(world.get_location("El Vibrato Construction Facility (Curious Copse) - BUGAANZEVE"),
-             lambda state: (state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder") and 
+             lambda state: (state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder", player) and 
                             state.has("Progressive El Vibrato Cylinder", player, 1) and
                             state.has("Progressive El Vibrato Device", player, 2)))
     set_rule(world.get_location("El Vibrato Construction Facility (Curious Copse) - HOSOM NOAN NOFU"),
-             lambda state: (state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder") and 
+             lambda state: (state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder", player) and 
                             state.has("Progressive El Vibrato Cylinder", player, 1) and
                             state.has("Progressive El Vibrato Device", player, 2)))
     set_rule(world.get_location("Curious Abandoned Well Facility (Secondary Storage) - Top Chest"),
