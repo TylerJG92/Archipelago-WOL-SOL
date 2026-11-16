@@ -435,6 +435,7 @@ location_table: Dict[str, WOLLocationData] = {
     "Gun Manor Hedge Maze - Hedge Wizard Defeated (Item 1)": WOLLocationData("Gun Manor Hedge Maze", "Gun Manor Hedge Maze", is_dlc=True),
     "Gun Manor Hedge Maze - Hedge Wizard Defeated (Item 2)": WOLLocationData("Gun Manor Hedge Maze", "Gun Manor Hedge Maze", is_dlc=True),
     "Gun Manor Hedge Maze - Hedge Wizard's Chest": WOLLocationData("Gun Manor Hedge Maze", "Gun Manor Hedge Maze", is_dlc=True),
+    "Gun Manor Hedge Maze - Wishing Well Token": WOLLocationData("Gun Manor Hedge Maze", "Gun Manor Cellar", is_dlc=True),
     "Gun Manor Carriage House - Cabinet (Item 1)": WOLLocationData("Gun Manor Carriage House", "Gun Manor Carriage House", is_dlc=True),
     "Gun Manor Carriage House - Cabinet (Item 2)": WOLLocationData("Gun Manor Carriage House", "Gun Manor Carriage House", is_dlc=True),
     "Gun Manor Carriage House - Hedge Clippers": WOLLocationData("Gun Manor Carriage House", "Gun Manor Carriage House", is_dlc=True),
