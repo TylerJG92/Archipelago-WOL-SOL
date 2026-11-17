@@ -137,10 +137,11 @@ basegame_region_table: Dict[str, Set[str]] = {
 dlc_region_table: Dict[str, Set[str]] = {
     "Gun Manor": {"Gun Manor Hedge Maze", "Gun Manor Carriage House", "Gun Manor Visitor Center",
                   "Gun Manor First Floor"},
-    "Gun Manor Hedge Maze": {"Gun Manor Cellar"},
+    "Gun Manor Hedge Maze": {"Gun Manor Boiler Room"},
     "Gun Manor Carriage House": set(),
     "Gun Manor Visitor Center": set(),
-    "Gun Manor Cellar": {"Gun Manor Laboratory"},
+    "Gun Manor Cellar": {"Gun Manor Laboratory", "Gun Manor Boiler Room"},
+    "Gun Manor Boiler Room": set(),
     "Gun Manor Laboratory": set(),
     "Gun Manor First Floor": {"Gun Manor Cellar", "Gun Manor Parlor", "Gun Manor Kitchen", "Gun Manor Dining Room",
                               "Gun Manor Second Floor"},

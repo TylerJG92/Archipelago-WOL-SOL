@@ -381,7 +381,8 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: (state.has("Gore-Splattered Scroll", player) and
                             state.has("Human Ashes x2", player) and
                             state.has("Glass Sphere", player) and
-                            state.has("Pickaxe", player))) #For mining stardust
+                            (state.has("Stardust", player) or
+                             state.has("Pickaxe", player))))# for mining stardust
     set_rule(world.get_location("Fort Cowardice Back Office - General Gob's Hat"),
              lambda state: state.has("Locks And How To Pick Them", player))
     set_rule(world.get_location("Fort Cowardice Back Office - General Gob's Pistol"),
@@ -610,15 +611,13 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: (state.has("Unstable Stick Of Dynamite", player) and
                             state.has("Bag Of Grease", player)))
     set_rule(world.get_location("El Vibrato Construction Facility (Curious Copse) - BUGAANZEVE"),
-             lambda state: (has_stench_resistance(state, world) and #In addition to getting to Curious Copse, need to activate machine in El Vibrato Ruin
-                            state.has("Percussive Maintenance", player) and
-                            state.has("Progressive El Vibrato Device", player, 2) and
-                            has_elv_battery_source(state, world)))
+             lambda state: (state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder", player) and 
+                            state.has("Progressive El Vibrato Cylinder", player, 1) and
+                            state.has("Progressive El Vibrato Device", player, 2)))
     set_rule(world.get_location("El Vibrato Construction Facility (Curious Copse) - HOSOM NOAN NOFU"),
-             lambda state: (has_stench_resistance(state, world) and #In addition to getting to Curious Copse, need to activate machine in El Vibrato Ruin
-                            state.has("Percussive Maintenance", player) and
-                            state.has("Progressive El Vibrato Device", player, 2) and
-                            has_elv_battery_source(state, world)))
+             lambda state: (state.can_reach_location("El Vibrato Ruin (Lost Dutch Oven Mine) [Stench Resistance] - Cylinder", player) and 
+                            state.has("Progressive El Vibrato Cylinder", player, 1) and
+                            state.has("Progressive El Vibrato Device", player, 2)))
     set_rule(world.get_location("Curious Abandoned Well Facility (Secondary Storage) - Top Chest"),
              lambda state: state.has("Progressive El Vibrato Device", player, 2))
     set_rule(world.get_location("Curious Abandoned Well Facility (Secondary Storage) - Bottom Chest"),
@@ -760,6 +759,10 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: state.can_reach_region("Fort Unnecessary", player))
     set_rule(world.get_location("El Vibrato Chamber (Curious False Mountain) - Chronokey Fabrication"),
              lambda state: state.has("Progressive El Vibrato Cylinder", player, 3))
+    set_rule(world.get_location("El Vibrato Chamber (Curious False Mountain) - TIMESQUEEZE Cowsbane Seeds"),
+             lambda state: state.has("Packet Of Cowsbane Seeds", player) and
+                          (state.can_reach_location("Lazy-A Dude Ranch - Cowsbane Harvest", player) or
+                           state.has("Progressive El Vibrato Cylinder", player, 3)))
     set_rule(world.get_location("Alamo Rent-A-Mule - Rented a Mule"),
              lambda state: state.can_reach_region("Fort Unnecessary", player))
     set_rule(world.get_location("Curious Flat Plain - Garbage Return"),
@@ -853,10 +856,15 @@ def set_location_rules(world: "WOLWorld") -> None:
 
         set_rule(world.get_location("Back of Gun Manor [Stench Resistance] - Compost Heap"),
              lambda state: has_stench_resistance(state, world))
+        set_rule(world.get_location("Gun Manor Hedge Maze - Tea Leaf Bush"),
+             lambda state: state.has("Tea Service", player))
+        set_rule(world.get_location("Gun Manor Boiler Room - Boiler Spout"),
+             lambda state: state.has("Tea Service (With Tea Leaves)", player))
         set_rule(world.get_location("Gun Manor Carriage House - Lathe"),
              lambda state: state.has("Wobbly Billiards Cue", player))
         set_rule(world.get_location("Gun Manor Visitor Center - Photo"),
-             lambda state: (state.has("Basics Of Gun Law", player) and
+             lambda state: (state.can_reach_region("Gun Manor Art Gallery", player) and
+                            state.has("Basics Of Gun Law", player) and
                             state.has("Duel Law", player) and
                             state.has("1878 Nautical Almanac", player) and
                             state.has("Shovel", player) and
@@ -900,6 +908,8 @@ def set_location_rules(world: "WOLWorld") -> None:
                             state.has("Geometry Textbook", player)))
         set_rule(world.get_location("Gun Manor Nursery - Crib"),
              lambda state: state.has("Blank Sheet Music", player))
+        set_rule(world.get_location("Mr. Gun's Manliness Room - Booze Cart"),
+             lambda state: state.has("Shower Curtain", player))
 
         set_rule(world.get_location("Magic-Infused Leaf Crafting - 3 Leaves"),
                  lambda state: state.can_reach_region("Gun Manor Hedge Maze", player))
