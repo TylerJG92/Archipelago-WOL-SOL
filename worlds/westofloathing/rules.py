@@ -270,13 +270,18 @@ def set_region_rules(world: "WOLWorld") -> None:
 
     world.get_entrance("Miscellaneous -> Leatherworkery Crafting").access_rule = \
         lambda state: can_leatherwork(state, world)
+    world.multiworld.register_indirect_condition(world.get_region("Hellstrom Ranch"), world.get_entrance("Miscellaneous -> Leatherworkery Crafting"))
     #Can get some of the smoldering/infernal leather earlier (Alexandria Ranch/Grizzled Skinner), but to get ALL of them you need access to these regions' encounters
     world.get_entrance("Leatherworkery Crafting -> Leatherworkery Crafting (Level 2)").access_rule = \
         lambda state: state.can_reach_region("Map Region E", player)
+    world.multiworld.register_indirect_condition(world.get_region("Map Region E"), world.get_entrance("Leatherworkery Crafting -> Leatherworkery Crafting (Level 2)"))
     world.get_entrance("Leatherworkery Crafting -> Leatherworkery Crafting (Level 3)").access_rule = \
         lambda state: state.can_reach_region("Map Region G", player)
+    world.multiworld.register_indirect_condition(world.get_region("Map Region G"), world.get_entrance("Leatherworkery Crafting -> Leatherworkery Crafting (Level 3)"))
+
     world.get_entrance("Miscellaneous -> Master Cookery Crafting").access_rule = \
         lambda state: can_cook(state, world)
+    world.multiworld.register_indirect_condition(world.get_region("The Great Garbanzo's Hideout"), world.get_entrance("Miscellaneous -> Master Cookery Crafting"))
 
     
     world.get_entrance("Soupstock Lode -> El Vibrato Chamber (SL)").access_rule = \
