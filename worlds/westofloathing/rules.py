@@ -863,7 +863,7 @@ def set_location_rules(world: "WOLWorld") -> None:
         set_rule(world.get_location("Gun Manor Carriage House - Lathe"),
              lambda state: state.has("Wobbly Billiards Cue", player))
         set_rule(world.get_location("Gun Manor Visitor Center - Photo"),
-             lambda state: (state.can_reach_region("Gun Manor Art Gallery") and
+             lambda state: (state.can_reach_region("Gun Manor Art Gallery", player) and
                             state.has("Basics Of Gun Law", player) and
                             state.has("Duel Law", player) and
                             state.has("1878 Nautical Almanac", player) and
