@@ -57,6 +57,11 @@ class WOLWorld(World):
 
     def create_item(self, name: str, classification: ItemClassification = None) -> WOLItem:
         item_data = item_table[name]
+
+        if not self.options.wander_sanity and name == "Bottle Of Ghost Whiskey":
+            classification = ItemClassification.filler
+            return WOLItem(name, classification, self.item_name_to_id[name], self.player)
+
         return WOLItem(name, classification or item_data.classification, self.item_name_to_id[name], self.player)
 
     def create_items(self) -> None:
@@ -78,6 +83,10 @@ class WOLWorld(World):
         if not self.options.dlc_enabled:
             for item, data in item_table.items():
                 if data.is_dlc:
+                    items_to_create[item] = 0
+        if not self.options.wander_sanity:
+            for item, data in item_table.items():
+                if data.is_wandersanity:
                     items_to_create[item] = 0
 
         for item, quantity in items_to_create.items():
@@ -104,7 +113,7 @@ class WOLWorld(World):
             region.add_exits(exits)
 
         for location_name, location_id in self.location_name_to_id.items():
-            if not self.options.dlc_enabled and location_table[location_name].is_dlc:
+            if (not self.options.dlc_enabled and location_table[location_name].is_dlc) or (not self.options.wander_sanity and location_table[location_name].is_wandersanity):
                 continue
             region = self.get_region(location_table[location_name].region)
             location = WOLLocation(self.player, location_name, location_id, region)
@@ -125,6 +134,7 @@ class WOLWorld(World):
             "dlc_enabled": self.options.dlc_enabled.value,
             "randomize_ghost_coach": self.options.randomize_ghost_coach.value,
             "randomize_goblintongue": self.options.randomize_goblintongue.value,
+            "wander_sanity": self.options.wander_sanity.value,
             "unbreakable_tools": self.options.unbreakable_tools.value,
             "deathlink_enabled": self.options.deathlink_enabled.value
         }

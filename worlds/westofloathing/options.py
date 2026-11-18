@@ -26,6 +26,14 @@ class RandomizeGoblintongue(DefaultOnToggle):
     internal_name = "randomize_goblintongue"
     display_name = "Randomize Goblintongue"
 
+class WanderSanity(DefaultOnToggle):
+    """
+    Enables single event Random Encounters, in each region, while wandering to contain Check Locations.
+    If disabled these events will contain their normal items instead of them being randomized into the pool.
+    """
+    internal_name = "wander_sanity"
+    display_name = "Wander Sanity"
+
 class UnbreakableTools(Toggle):
     """
     Makes it impossible for shovels and pickaxes to break in certain circumstances.
@@ -37,8 +45,10 @@ class UnbreakableTools(Toggle):
 class Deathlink(Toggle):
     """
     Allows for the sending and recieving of Deathlink packets:
-    Recieving: The players character gains the Angry effect
-    Sending: Whenever the player fails a combat they send a deathlink
+    Recieving: The players character gains the Angry effect.
+    Sending: Whenever the player fails a combat, gives up in combat and certain special death events will send a deathlink.
+
+    Note: Can be toggled on or off within the Escape menu in game at any time.
     """
     internal_name = "deathlink_enabled"
     display_name = "Deathlink"
@@ -50,6 +60,7 @@ class WOLOptions(PerGameCommonOptions):
     dlc_enabled: EnableDLC
     randomize_ghost_coach: RandomizeGunManorCoach
     randomize_goblintongue: RandomizeGoblintongue
+    wander_sanity: WanderSanity
     unbreakable_tools: UnbreakableTools
     deathlink_enabled: Deathlink
 
