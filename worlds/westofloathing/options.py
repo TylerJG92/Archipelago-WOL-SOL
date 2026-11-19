@@ -28,11 +28,24 @@ class RandomizeGoblintongue(DefaultOnToggle):
 
 class WanderSanity(DefaultOnToggle):
     """
+    Originally called "Random Event"
     Enables single event Random Encounters, in each region, while wandering to contain Check Locations.
     If disabled these events will contain their normal items instead of them being randomized into the pool.
+    Note: Some items need to remain in the randomizer, If disabled the items that remain will be replaced with Meat instead.
     """
     internal_name = "wander_sanity"
     display_name = "Wander Sanity"
+
+class CrateSanity(DefaultOnToggle):
+    """
+    Originally called "Progressive Loot"
+    Enables checks to be located in a variety of crates located throught the game.
+    Crates include: Ranch crates, Grave crates, Medical crates and El Vibrato Crates.
+    If disabled these crates will contain their original or adjacent items to the vanilla game. Special items only will be excluded from the randomize pool.
+    Note: Some items need to remain in the randomizer, If disabled the items that remain will be replaced with Meat instead.
+    """
+    internal_name = "crate_sanity"
+    display_name = "Crate Sanity"
 
 class UnbreakableTools(Toggle):
     """
@@ -61,6 +74,7 @@ class WOLOptions(PerGameCommonOptions):
     randomize_ghost_coach: RandomizeGunManorCoach
     randomize_goblintongue: RandomizeGoblintongue
     wander_sanity: WanderSanity
+    crate_sanity: CrateSanity
     unbreakable_tools: UnbreakableTools
     deathlink_enabled: Deathlink
 
