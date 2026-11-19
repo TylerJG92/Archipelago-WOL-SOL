@@ -8,13 +8,18 @@ if TYPE_CHECKING:
 def can_leatherwork(state: CollectionState, world: "WOLWorld") -> bool:
     player = world.player
 
+    if world.options.wander_sanity:
+        can_get_knife = state.has("Varmint Skinnin' Knife", player)
+    else:
+        can_get_knife = state.can_reach_region("Map Region C", player)
+
     return (
+            can_get_knife and
             state.has("Burned Leatherworking Manual", player) and
             (
              state.has("A Portable Leatherwork Bench", player) or
              state.can_reach_region("Hellstrom Ranch", player)
-            ) and
-            state.has("Varmint Skinnin' Knife", player)
+            )         
            )
 
 def can_cook(state: CollectionState, world: "WOLWorld") -> bool:
@@ -61,12 +66,18 @@ def has_common_resistance(state: CollectionState, world: "WOLWorld", checking_fo
         state.can_reach_region("Olive Garden's Homestead", player)
     )
 
+    if world.options.wander_sanity:
+        can_get_kitchen_pants = state.has("Kitchen Pants", player)
+    else:
+        can_get_kitchen_pants = state.can_reach_region("Map Region D", player)
+
     if world.options.dlc_enabled:
         can_get_clownwort = has_vanilla_clownwort or (state.has("Desert Eatin' And Drinkin'", player) and state.can_reach_region("Gun Manor Hedge Maze", player))
     else:
         can_get_clownwort = has_vanilla_clownwort
 
     return (can_get_clownwort or
+            can_get_kitchen_pants or
             can_cook(state, world) and not checking_for_murray and can_save_murray(state, world) or #Can cook Mirrorbeans at level 3
             state.has("Advanced Beancraft", player, 8)
             #Could get Uncanny Presence with fewer of these, 5 guarantees you have the option -
@@ -82,6 +93,11 @@ def has_stench_resistance(state: CollectionState, world: "WOLWorld", checking_fo
 def has_hot_resistance(state: CollectionState, world: "WOLWorld") -> bool:
     player = world.player
 
+    if world.options.wander_sanity:
+        can_get_knife = state.has("Varmint Skinnin' Knife", player)
+    else:
+        can_get_knife = state.can_reach_region("Map Region C", player)
+
     return (
             state.has_group("Hot Resistance", player) or
             state.can_reach_region("Roy Bean's House", player) or
@@ -90,7 +106,7 @@ def has_hot_resistance(state: CollectionState, world: "WOLWorld") -> bool:
              (state.has("Monkey Wrench", player) or state.has("Percussive Maintenance", player))
             ) or
             has_common_resistance(state, world) or
-            (state.has("Varmint Skinnin' Knife", player) and state.can_reach_region("Map Region F", player))
+            (can_get_knife and state.can_reach_region("Map Region F", player))
             #Can also get it from Beer-Battered Hot Dogs but those are easily missable and would be a pain for logic
            )
 
@@ -160,6 +176,16 @@ def can_build_bridge(state: CollectionState, world: "WOLWorld") -> bool:
     return (state.has("El Vibrato Model Bridge", player) or
             (state.has("Progressive Nex-Mex Skillbook", player, 4) and state.can_reach_region("Buffalo Pile", player)) or 
             can_get_breadwood_lumber(state, world))
+
+def can_get_murder_pepper(state: CollectionState, world: "WOLWorld") -> bool:
+    player = world.player
+
+    if world.options.wander_sanity:
+        can_get = state.has("Southeast-Western Murder Pepper", player)
+    else:
+        can_get = state.can_reach_region("Dirtwater", player) and state.has("Shaker Of Saltpeter", player)
+
+    return can_get
 
 def set_region_rules(world: "WOLWorld") -> None:
     player = world.player
@@ -313,10 +339,10 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: state.can_reach_region("Shaggy Dog Cave", player))
     set_rule(world.get_location("Dirtwater Saloon - Chef's Mail Key"),
              lambda state: (state.has("Shaker Of Saltpeter", player) and
-                            state.has("Southeast-Western Murder Pepper", player)))
+                            can_get_murder_pepper(state, world)))
     set_rule(world.get_location("Dirtwater Saloon - Chef's Quest Complete"),
              lambda state: (state.has("Shaker Of Saltpeter", player) and
-                            state.has("Southeast-Western Murder Pepper", player) and
+                            can_get_murder_pepper(state, world) and
                             state.has("Saute Knife", player) and
                             state.has("Dave's Secret Sauce Recipe", player)))
     set_rule(world.get_location("Dirtwater Post Office - Postal Codes"),
@@ -379,7 +405,7 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: state.has("Shovel", player))
     set_rule(world.get_location("The Daveyard - Dave J's Grave (Chef Quest)"),
              lambda state: state.has("Shaker Of Saltpeter", player) and
-                           state.has("Southeast-Western Murder Pepper", player) and
+                           can_get_murder_pepper(state, world) and
                            state.has("Saute Knife", player) and
                            state.has("Shovel", player))
     set_rule(world.get_location("The Daveyard Mausoleum - The Skeleton of Dave B. Defeated"),
@@ -400,9 +426,11 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: state.has("Get Crackin': A Guide To Modern Safes", player))
     set_rule(world.get_location("Gustavson Gulch - Deli Hut"),
              lambda state: state.has("Locks And How To Pick Them", player))
+    
     if options.randomize_goblintongue:
         set_rule(world.get_location("Gustavson Gulch Storage Hut - Secret Item"),
                 lambda state: state.has("English-Goblintongue Dictionary", player))
+    
     set_rule(world.get_location("Gustavson Gulch - Cafe Hut"),
              lambda state: state.has("Locks And How To Pick Them", player))
     set_rule(world.get_location("Gustavson Gulch Treasure Cave - Bottom Chest (Item 1)"),
@@ -787,11 +815,6 @@ def set_location_rules(world: "WOLWorld") -> None:
              lambda state: (state.has("Progressive Curly's Meat", player, 5) and
                             state.has("Shovel", player)))
 
-    set_rule(world.get_location("Random Encounter (Region A) - Murder Pepper (Chef Quest)"),
-             lambda state: state.has("Shaker Of Saltpeter", player))
-    set_rule(world.get_location("Random Encounter (Region D) - Drunk Ghost (Give Whiskey)"),
-             lambda state: state.has("Bottle Of Ghost Whiskey", player))
-
     set_rule(world.get_location("Rufus' Gifts - Gift 1"),
              lambda state: state.has("Blank Postcard", player))
     set_rule(world.get_location("Rufus' Gifts - Gift 2"),
@@ -929,3 +952,9 @@ def set_location_rules(world: "WOLWorld") -> None:
                  lambda state: state.can_reach_region("Gun Manor Cellar", player))
         set_rule(world.get_location("Spider Part Crafting - 8 Piles"),
                  lambda state: state.can_reach_region("Gun Manor Cellar", player))
+
+    if options.wander_sanity:
+        set_rule(world.get_location("Wander Sanity (Region A) - Murder Pepper (Chef Quest)"),
+                     lambda state: state.has("Shaker Of Saltpeter", player))
+        set_rule(world.get_location("Wander Sanity (Region D) - Drunk Ghost (Give Whiskey)"),
+                     lambda state: state.has("Bottle Of Ghost Whiskey", player))
