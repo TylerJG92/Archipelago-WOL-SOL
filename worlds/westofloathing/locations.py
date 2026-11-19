@@ -6,6 +6,7 @@ class WOLLocationData(NamedTuple):
     categories: Set[str] = {}
     is_dlc: bool = False
     is_wandersanity: bool = False
+    is_cratesanity: bool = False
 
 base_id = 752813602
 
@@ -644,32 +645,32 @@ location_table: Dict[str, WOLLocationData] = {
     "Master Cookery Crafting - Level 3 (Kettle)": WOLLocationData("Master Cookery Crafting", "Master Cookery Crafting"),
     "Master Cookery Crafting - Level 3 (Shootin' Iron)": WOLLocationData("Master Cookery Crafting", "Master Cookery Crafting"),
     "Master Cookery Crafting - Level 3 (Whisk)": WOLLocationData("Master Cookery Crafting", "Master Cookery Crafting"),
-    "Progressive Loot - 3rd Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 6th Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 9th Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 12th Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 15th Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 18th Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 21st Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 24th Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 5th Army Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 10th Army Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 15th Army Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 5th El Vibrato Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 7th El Vibrato Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 9th El Vibrato Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 11th El Vibrato Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 13th El Vibrato Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 15th El Vibrato Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 3rd Mining Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 6th Mining Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 9th Mining Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 5th Ranch Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 10th Ranch Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 15th Ranch Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 3rd Medical Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 6th Medical Container": WOLLocationData("Progressive Containers", "Progressive Containers"),
-    "Progressive Loot - 9th Medical Container": WOLLocationData("Progressive Containers", "Progressive Containers")
+    "Crate Sanity - 3rd Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 6th Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 9th Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 12th Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 15th Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 18th Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 21st Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 24th Grave Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 5th Army Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 10th Army Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 15th Army Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 5th El Vibrato Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 7th El Vibrato Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 9th El Vibrato Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 11th El Vibrato Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 13th El Vibrato Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 15th El Vibrato Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 3rd Mining Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 6th Mining Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 9th Mining Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 5th Ranch Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 10th Ranch Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 15th Ranch Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 3rd Medical Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 6th Medical Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Crate Sanity - 9th Medical Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True)
 }
 
 location_name_to_id: Dict[str, int] = {name: base_id + index for index, name in enumerate(location_table)}

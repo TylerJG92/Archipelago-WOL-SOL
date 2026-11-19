@@ -84,9 +84,15 @@ class WOLWorld(World):
             for item, data in item_table.items():
                 if data.is_dlc:
                     items_to_create[item] = 0
+
         if not self.options.wander_sanity:
             for item, data in item_table.items():
                 if data.is_wandersanity:
+                    items_to_create[item] = 0
+
+        if not self.options.crate_sanity:
+            for item, data in item_table.items():
+                if data.is_cratesanity:
                     items_to_create[item] = 0
 
         for item, quantity in items_to_create.items():
@@ -113,7 +119,7 @@ class WOLWorld(World):
             region.add_exits(exits)
 
         for location_name, location_id in self.location_name_to_id.items():
-            if (not self.options.dlc_enabled and location_table[location_name].is_dlc) or (not self.options.wander_sanity and location_table[location_name].is_wandersanity):
+            if (not self.options.dlc_enabled and location_table[location_name].is_dlc) or (not self.options.wander_sanity and location_table[location_name].is_wandersanity) or (not self.options.crate_sanity and location_table[location_name].is_cratesanity):
                 continue
             region = self.get_region(location_table[location_name].region)
             location = WOLLocation(self.player, location_name, location_id, region)
@@ -135,6 +141,7 @@ class WOLWorld(World):
             "randomize_ghost_coach": self.options.randomize_ghost_coach.value,
             "randomize_goblintongue": self.options.randomize_goblintongue.value,
             "wander_sanity": self.options.wander_sanity.value,
+            "crate_sanity": self.options.crate_sanity.value,
             "unbreakable_tools": self.options.unbreakable_tools.value,
             "deathlink_enabled": self.options.deathlink_enabled.value
         }

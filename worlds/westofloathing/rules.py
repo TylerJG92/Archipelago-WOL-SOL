@@ -849,31 +849,6 @@ def set_location_rules(world: "WOLWorld") -> None:
     set_rule(world.get_location("Master Cookery Crafting - Level 3 (Whisk)"),
              lambda state: state.has("Delicate Bean-Iron Nugget", player, 3))
 
-    set_rule(world.get_location("Progressive Loot - 3rd Medical Container"),
-             lambda state: state.has("Crowbar", player) or
-                           state.has("Locks And How To Pick Them", player) or
-                           state.can_reach_region("Map Region D", player))
-    set_rule(world.get_location("Progressive Loot - 6th Medical Container"),
-             lambda state: state.has("Crowbar", player) or
-                           state.has("Locks And How To Pick Them", player) or
-                           state.can_reach_region("Map Region D", player))
-    set_rule(world.get_location("Progressive Loot - 9th Medical Container"),
-             lambda state: state.has("Crowbar", player) or
-                           state.has("Locks And How To Pick Them", player) or
-                           state.can_reach_region("Map Region D", player))
-    set_rule(world.get_location("Progressive Loot - 5th El Vibrato Container"),
-             lambda state: state.has("Progressive El Vibrato Device", player, 2))
-    set_rule(world.get_location("Progressive Loot - 7th El Vibrato Container"),
-             lambda state: state.has("Progressive El Vibrato Device", player, 2))
-    set_rule(world.get_location("Progressive Loot - 9th El Vibrato Container"),
-             lambda state: state.has("Progressive El Vibrato Device", player, 2))
-    set_rule(world.get_location("Progressive Loot - 11th El Vibrato Container"),
-             lambda state: state.has("Progressive El Vibrato Device", player, 2))
-    set_rule(world.get_location("Progressive Loot - 13th El Vibrato Container"),
-             lambda state: state.has("Progressive El Vibrato Device", player, 2))
-    set_rule(world.get_location("Progressive Loot - 15th El Vibrato Container"),
-             lambda state: state.has("Progressive El Vibrato Device", player, 2))
-
     if options.dlc_enabled:
         set_rule(world.get_location("Desert House - Macready's Grave"),
              lambda state: (state.has("Basics Of Gun Law", player) and
@@ -958,3 +933,29 @@ def set_location_rules(world: "WOLWorld") -> None:
                      lambda state: state.has("Shaker Of Saltpeter", player))
         set_rule(world.get_location("Wander Sanity (Region D) - Drunk Ghost (Give Whiskey)"),
                      lambda state: state.has("Bottle Of Ghost Whiskey", player))
+
+    if options.crate_sanity:
+        set_rule(world.get_location("Crate Sanity - 3rd Medical Container"),
+                     lambda state: state.has("Crowbar", player) or
+                                   state.has("Locks And How To Pick Them", player) or
+                                   state.can_reach_region("Map Region D", player))
+        set_rule(world.get_location("Crate Sanity - 6th Medical Container"),
+                     lambda state: state.has("Crowbar", player) or
+                                   state.has("Locks And How To Pick Them", player) or
+                                   state.can_reach_region("Map Region D", player))
+        set_rule(world.get_location("Crate Sanity - 9th Medical Container"),
+                     lambda state: state.has("Crowbar", player) or
+                                   state.has("Locks And How To Pick Them", player) or
+                                   state.can_reach_region("Map Region D", player))
+        set_rule(world.get_location("Crate Sanity - 5th El Vibrato Container"),
+                     lambda state: state.has("Progressive El Vibrato Device", player, 2))
+        set_rule(world.get_location("Crate Sanity - 7th El Vibrato Container"),
+                     lambda state: state.has("Progressive El Vibrato Device", player, 2))
+        set_rule(world.get_location("Crate Sanity - 9th El Vibrato Container"),
+                     lambda state: state.has("Progressive El Vibrato Device", player, 2))
+        set_rule(world.get_location("Crate Sanity - 11th El Vibrato Container"),
+                     lambda state: state.has("Progressive El Vibrato Device", player, 2))
+        set_rule(world.get_location("Crate Sanity - 13th El Vibrato Container"),
+                     lambda state: state.has("Progressive El Vibrato Device", player, 2))
+        set_rule(world.get_location("Crate Sanity - 15th El Vibrato Container"),
+                     lambda state: state.has("Progressive El Vibrato Device", player, 2))
