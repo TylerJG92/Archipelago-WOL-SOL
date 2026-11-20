@@ -119,8 +119,12 @@ class WOLWorld(World):
             region.add_exits(exits)
 
         for location_name, location_id in self.location_name_to_id.items():
-            if (not self.options.dlc_enabled and location_table[location_name].is_dlc) or (not self.options.wander_sanity and location_table[location_name].is_wandersanity) or (not self.options.crate_sanity and location_table[location_name].is_cratesanity)or (not self.options.haystack_sanity and location_table[location_name].is_haystacksanity):
+            if ((not self.options.dlc_enabled and location_table[location_name].is_dlc) or
+                (not self.options.wander_sanity and location_table[location_name].is_wandersanity) or
+                (not self.options.crate_sanity and location_table[location_name].is_cratesanity) or
+                (not self.options.haystack_sanity and location_table[location_name].is_haystacksanity)):
                 continue
+            
             region = self.get_region(location_table[location_name].region)
             location = WOLLocation(self.player, location_name, location_id, region)
             region.locations.append(location)
