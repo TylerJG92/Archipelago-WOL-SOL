@@ -3,14 +3,14 @@ from typing import Dict, Any
 from Options import (DefaultOnToggle, Toggle, StartInventoryPool, Choice, Range, TextChoice, PlandoConnections,
                      PerGameCommonOptions, OptionGroup, Visibility)
 
-class EnableDLC(DefaultOnToggle):
+class EnableDLC(Toggle):
     """
     To use this option, you must own the "Reckonin' at Gun Manor" DLC.
     """
     internal_name = "dlc_enabled"
     display_name = "Gun Manor DLC Enabled"
 
-class RandomizeGunManorCoach(DefaultOnToggle):
+class RandomizeGunManorCoach(Toggle):
     """
     Randomize the coach to access Gun Manor into the item pool.
     This has no effect if the Gun Manor DLC is disabled.
@@ -47,6 +47,14 @@ class CrateSanity(DefaultOnToggle):
     internal_name = "crate_sanity"
     display_name = "Crate Sanity"
 
+class HaystackSanity(DefaultOnToggle):
+    """
+    Enables check locations to be placed inside each haystack within the game.
+    If disabled, the check location will be turned off only.
+    """
+    internal_name = "haystack_sanity"
+    display_name = "Haystack Sanity"
+
 class UnbreakableTools(Toggle):
     """
     Makes it impossible for shovels and pickaxes to break in certain circumstances.
@@ -75,13 +83,21 @@ class WOLOptions(PerGameCommonOptions):
     randomize_goblintongue: RandomizeGoblintongue
     wander_sanity: WanderSanity
     crate_sanity: CrateSanity
+    haystack_sanity: HaystackSanity
     unbreakable_tools: UnbreakableTools
     deathlink_enabled: Deathlink
 
 wol_option_groups = [
-    # OptionGroup("Logic Options", [
-        
-    # ])
+    OptionGroup("Sanity Options", [
+        WanderSanity,
+        CrateSanity,
+        HaystackSanity
+    ]),
+
+    OptionGroup("DLC Options", [
+            EnableDLC,
+            RandomizeGunManorCoach
+        ], True),
 ]
 
 wol_option_presets: Dict[str, Dict[str, Any]] = {

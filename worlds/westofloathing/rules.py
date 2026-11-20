@@ -187,6 +187,28 @@ def can_get_murder_pepper(state: CollectionState, world: "WOLWorld") -> bool:
 
     return can_get
 
+def haystack_sanity_count(state: CollectionState, world: "WOLWorld") -> int:
+    player = world.player
+
+    count = 4 #6 is the total number available from the very beginning of the game, but seeing as I am planning on Region-Lock soon, im setting it at 4, family farm and sterns ranch for region A.
+
+    count += (
+        state.can_reach_region("Butterfield Ranch", player) +
+        state.can_reach_region("Lazy-A Dude Ranch", player) +
+
+        (state.can_reach_region("Butterfield Ranch", player) and
+         state.has("Locks And How To Pick Them", player)) +
+        
+        state.can_reach_region("Hellstrom Ranch", player) * 2 +
+
+        (state.can_reach_region("Kellogg Ranch", player) and
+         (state.has("Locks And How To Pick Them", player) or
+          state.has("Kellogg Ranch Keyring", player))) * 4 +
+        
+        state.can_reach_region("Alamo Rent-A-Mule", player) * 3
+    )
+    return count
+
 def set_region_rules(world: "WOLWorld") -> None:
     player = world.player
     options = world.options
@@ -959,3 +981,29 @@ def set_location_rules(world: "WOLWorld") -> None:
                      lambda state: state.has("Progressive El Vibrato Device", player, 2))
         set_rule(world.get_location("Crate Sanity - 15th El Vibrato Container"),
                      lambda state: state.has("Progressive El Vibrato Device", player, 2))
+
+    if options.haystack_sanity:
+        set_rule(world.get_location("Haystack Sanity - 5th Haystack"),
+                    lambda state: haystack_sanity_count(state, world)>= 5)
+        set_rule(world.get_location("Haystack Sanity - 6th Haystack"),
+                    lambda state: haystack_sanity_count(state, world)>= 6)
+        set_rule(world.get_location("Haystack Sanity - 7th Haystack"),
+                    lambda state: haystack_sanity_count(state, world)>= 7)
+        set_rule(world.get_location("Haystack Sanity - 8th Haystack"),
+                    lambda state: haystack_sanity_count(state, world)>= 8)
+        set_rule(world.get_location("Haystack Sanity - 9th Haystack"),
+                    lambda state: haystack_sanity_count(state, world)>= 9)
+        set_rule(world.get_location("Haystack Sanity - 10th Haystack"),
+                    lambda state: haystack_sanity_count(state, world)>= 10)
+        set_rule(world.get_location("Haystack Sanity - 11th Haystack"),
+                    lambda state: haystack_sanity_count(state, world)>= 11)
+        set_rule(world.get_location("Haystack Sanity - 12th Haystack"),
+                    lambda state: haystack_sanity_count(state, world)>= 12)
+        set_rule(world.get_location("Haystack Sanity - 13th Haystack"),
+                    lambda state: haystack_sanity_count(state, world)>= 13)
+        set_rule(world.get_location("Haystack Sanity - 14th Haystack"),
+                    lambda state: haystack_sanity_count(state, world)>= 14)
+        set_rule(world.get_location("Haystack Sanity - 15th Haystack"),
+                    lambda state: haystack_sanity_count(state, world)>= 15)
+        set_rule(world.get_location("Haystack Sanity - 16th Haystack"),
+                    lambda state: haystack_sanity_count(state, world)>= 16)
