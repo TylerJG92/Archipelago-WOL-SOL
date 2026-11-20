@@ -59,7 +59,7 @@ class WOLWorld(World):
         item_data = item_table[name]
 
         if not self.options.wander_sanity and name == "Bottle Of Ghost Whiskey":
-            classification = ItemClassification.filler
+            classification = ItemClassification.useful
             return WOLItem(name, classification, self.item_name_to_id[name], self.player)
 
         return WOLItem(name, classification or item_data.classification, self.item_name_to_id[name], self.player)
@@ -119,7 +119,7 @@ class WOLWorld(World):
             region.add_exits(exits)
 
         for location_name, location_id in self.location_name_to_id.items():
-            if (not self.options.dlc_enabled and location_table[location_name].is_dlc) or (not self.options.wander_sanity and location_table[location_name].is_wandersanity) or (not self.options.crate_sanity and location_table[location_name].is_cratesanity):
+            if (not self.options.dlc_enabled and location_table[location_name].is_dlc) or (not self.options.wander_sanity and location_table[location_name].is_wandersanity) or (not self.options.crate_sanity and location_table[location_name].is_cratesanity)or (not self.options.haystack_sanity and location_table[location_name].is_haystacksanity):
                 continue
             region = self.get_region(location_table[location_name].region)
             location = WOLLocation(self.player, location_name, location_id, region)
@@ -142,6 +142,7 @@ class WOLWorld(World):
             "randomize_goblintongue": self.options.randomize_goblintongue.value,
             "wander_sanity": self.options.wander_sanity.value,
             "crate_sanity": self.options.crate_sanity.value,
+            "haystack_sanity": self.options.haystack_sanity.value,
             "unbreakable_tools": self.options.unbreakable_tools.value,
             "deathlink_enabled": self.options.deathlink_enabled.value
         }

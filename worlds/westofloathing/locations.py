@@ -7,6 +7,7 @@ class WOLLocationData(NamedTuple):
     is_dlc: bool = False
     is_wandersanity: bool = False
     is_cratesanity: bool = False
+    is_haystacksanity:bool = False
 
 base_id = 752813602
 
@@ -670,7 +671,23 @@ location_table: Dict[str, WOLLocationData] = {
     "Crate Sanity - 15th Ranch Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
     "Crate Sanity - 3rd Medical Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
     "Crate Sanity - 6th Medical Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
-    "Crate Sanity - 9th Medical Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True)
+    "Crate Sanity - 9th Medical Container": WOLLocationData("Progressive Containers", "Progressive Containers", is_cratesanity=True),
+    "Haystack Sanity - 1st Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 2nd Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 3rd Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 4th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 5th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 6th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 7th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 8th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 9th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 10th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 11th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 12th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 13th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 14th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 15th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Haystack Sanity - 16th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
 }
 
 location_name_to_id: Dict[str, int] = {name: base_id + index for index, name in enumerate(location_table)}
