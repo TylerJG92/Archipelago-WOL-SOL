@@ -120,20 +120,6 @@ def has_cold_resistance(state: CollectionState, world: "WOLWorld") -> bool:
             #Can also get it from Beer-Battered Hot Dogs but those are easily missable and would be a pain for logic
            )
 
-# This shouldnt be needed anymore once I finish with the Progressive El Vibrato Device since the player will now get access to the perfessors house before the transponder
-#def has_elv_keystone_source(state: CollectionState, world: "WOLWorld") -> bool:
-    #player = world.player
-
-    #Can also farm these in the Lost Dutch Oven Mine chamber (infinite El Vibrato combat), but it requires a keystone to get in
-    #return (
-            #state.has("El Vibrato Transponder", player) and
-            #(
-             #state.can_reach_region("The Perfessor's House", player) or
-             #state.can_reach_region("Map Region D", player) or #Can farm them in the Curious Abandoned Well or from Region D/E encounters
-             #state.can_reach_region("Map Region E", player)
-            #)
-           #)
-
 def has_elv_battery_source(state: CollectionState, world: "WOLWorld") -> bool:
     player = world.player
 
@@ -149,32 +135,101 @@ def has_elv_battery_source(state: CollectionState, world: "WOLWorld") -> bool:
 def can_get_breadwood_lumber(state: CollectionState, world: "WOLWorld") -> bool:
     player = world.player
 
+    if not world.options.breadwood_bridge_enabled: return False
     if not state.can_reach_region("Breadwood", player): return False
 
-    count = 1 #The cemetery quest is basically free, at least as far as AP logic goes
+    need = 5
+    if world.options.bridge_quest_enabled:
+        if world.options.all_breadwood_quests:
+            need = 7 
+
+    if world.options.breadwood_bridge_enabled:
+        if world.options.bridge_quest_enabled:
+            ghostwoodQuest = (state.has("NE North Central Logging Permit", player) and 
+                          state.can_reach_location("Ghostwood Town Hall - Permit Finally Processed", player))
+            mail = (state.has("Breadwood's Missing Mail", player) and
+                    state.can_reach_location("Chuck's House Cellar - Mail Bag", player))
+            yeast = (state.has("Half A Ton Of Yeast", player) and
+                     state.can_reach_location("Ol' Schmaltz Brewery - Deceased Yeast Beast", player))
+            bread = (state.has("Forty Loaves Of Bread", player) and
+                     state.can_reach_location("Baker Boys' Hideout - Bread Recovered", player))
+            book = (state.has("Overdue Breadwood Book", player) and
+                    state.can_reach_location("Alexandria Ranch - Smoldering Book Pile", player))
+        else:
+            ghostwoodQuest = state.has("NE North Central Logging Permit", player)
+            mail = state.has("Breadwood's Missing Mail", player)
+            yeast = state.has("Half A Ton Of Yeast", player)
+            bread = state.has("Forty Loaves Of Bread", player)
+            book = state.has("Overdue Breadwood Book", player)
+
+    count = 0 
     count += (
-              state.has("NE North Central Logging Permit", player) +
-              state.has("Breadwood's Missing Mail", player) +
-              state.has("Half A Ton Of Yeast", player) +
-              state.has("Forty Loaves Of Bread", player) +
-              state.has("Overdue Breadwood Book", player) +
+              ghostwoodQuest +
+              mail +
+              yeast +
+              bread +
+              book +
               (state.has("Breadwood Bread Bowl x5", player) and
                state.can_reach_region("Soupstock Lode", player) and
                (state.has("Monkey Wrench", player) or state.has("Percussive Maintenance", player)) #and
                #has_hot_resistance(state, world)) #This IS a requirement but basically short circuits because you can farm it in soupstock lode
-              )
+              ) +
+              state.can_reach_region("Fort Memoriam", player) #while it was free to get the caretaker, adding this now for count of region lock
              )
 
-    return count >= 5
+    return count >= need
+
+def book_counter_for_bridge(state: CollectionState, world: "WOLWorld") -> bool:
+    player = world.player
+
+    if world.options.horse_selection.value == 2: return True #player can get all the locations for necro books with this horse from region A.
+
+    count = 0
+
+    count += (
+        state.can_reach_location("Fort Alldead - Knapsack (Item 2)", player) +
+        state.can_reach_location("Chuck's House Cellar - Bookcase (Item 3)", player) +
+        state.can_reach_location("Reboot Hill (Plot 3) - Cultists' Pedestal", player) +
+        state.can_reach_location("Fort Memoriam Barracks - Bookshelf", player) +
+        state.can_reach_location("Buffalo Pile (Sleeping Quarters) - Pedestal", player) +
+        state.can_reach_location("Military Cemetery - Plot 666", player)
+    )
+    return count >= 4
+
+def can_get_bone_bridge(state: CollectionState, world: "WOLWorld") -> bool:
+    player = world.player
+
+    if not world.options.necro_bridge_enabled: return False
+
+    if world.options.necro_bridge_enabled:
+        if world.options.bridge_quest_enabled:
+            need_vanilla = book_counter_for_bridge(state, world)
+        else:
+            need_vanilla = True #true means false in this case, if the player dosent need vanilla this needs to be set to true
+
+    return (state.has("Progressive Nex-Mex Skillbook", player, 4) and 
+            state.can_reach_region("Buffalo Pile", player) and
+            need_vanilla)
+
+def can_get_el_vib_bridge(state: CollectionState, world: "WOLWorld") -> bool:
+    player = world.player
+
+    if not world.options.el_vib_bridge_enabled: return False
+
+    if world.options.el_vib_bridge_enabled:
+        if world.options.bridge_quest_enabled:
+            return (state.can_reach_location("El Vibrato Construction Facility (Curious Copse) - HOSOM NOAN NOFU", player) and
+                    state.has("El Vibrato Model Bridge", player))
+        else:
+            return state.has("El Vibrato Model Bridge", player)
 
 def can_build_bridge(state: CollectionState, world: "WOLWorld") -> bool:
     player = world.player
 
     if not state.can_reach_region("Railroad Camp (West)", player): return False
 
-    #Might want another requirement for the El Vibrato bridge route later too, like activating the relevant facility or something
-    return (state.has("El Vibrato Model Bridge", player) or
-            (state.has("Progressive Nex-Mex Skillbook", player, 4) and state.can_reach_region("Buffalo Pile", player)) or 
+    return (can_get_el_vib_bridge(state, world) or
+            can_get_bone_bridge(state, world) or 
             can_get_breadwood_lumber(state, world))
 
 def can_get_murder_pepper(state: CollectionState, world: "WOLWorld") -> bool:
@@ -209,6 +264,61 @@ def haystack_sanity_count(state: CollectionState, world: "WOLWorld") -> int:
     )
     return count
 
+def can_goal(state: CollectionState, world: "WOLWorld") -> bool:
+    player = world.player
+    options = world.options
+    vanilla = options.norton_quest_enabled
+
+    if not state.can_reach_region("Frisco", player): return False
+
+    if options.honey_jellybean_enabled:
+        if vanilla:
+            jellybean = (state.has("Honey Jelly Bean", player) and
+                         state.can_reach_location("Roy Bean's House - Honey Bean", player))
+        else:
+            jellybean = state.has("Honey Jelly Bean", player)
+    else: jellybean = False
+
+    if options.turnip_crown_enabled:
+        if vanilla:
+            turnip = (state.has("Turnip Crown", player) and
+                      state.can_reach_location("The Silver Plater - Plated the Turnip", player))
+        else:
+            turnip = state.has("Turnip Crown", player)
+    else: turnip = False
+
+    if options.gold_crown_enabled:
+        if vanilla:
+            gold = (state.has("Gold Tooth Crown", player) and
+                    state.can_reach_location("Fort of Darkness (Second Tent) - Bone Trader (23 Gold Teeth)", player))
+        else:
+            gold = state.has("Gold Tooth Crown", player)
+    else: gold = False
+
+    if options.necro_crown_enabled:
+        if vanilla:
+            necro = (state.has("The Necromancer's Crown", player) and
+                     state.can_reach_location("Necromancer's Tower - Necromancer Defeated", player))
+        else:
+            necro = state.has("The Necromancer's Crown", player)
+    else: necro = False
+
+    if options.el_crown_enabled:
+        if vanilla:
+            el = (state.has("El Vibrato Crown", player) and
+                  state.can_reach_location("El Vibrato Control Center (Deepest Delve Mine) - El Vibrato Quest Completion", player))
+        else:
+            el = state.has("El Vibrato Crown", player)
+    else: el = False
+
+    return (
+        jellybean or
+        turnip or
+        gold or
+        necro or
+        el
+    )
+
 def set_region_rules(world: "WOLWorld") -> None:
     player = world.player
     options = world.options
@@ -238,15 +348,6 @@ def set_region_rules(world: "WOLWorld") -> None:
 
     world.get_entrance("Dirtwater -> The Perfessor's House").access_rule = \
         lambda state: state.has("Progressive El Vibrato Device", player, 1)
-
-    #Bounty regions don't really have any hard requirements - even for the ones that need items for the peaceful resolution,
-    #you can always just kill 'em, so by default there's the option for basically free progression up to the pickle factory
-
-    #TODO: Unlocking the door to the Silversmith's House requires a needle but not Lockpickin', but don't have a good way to consider needles for logic yet
-    #Player dosent need a better way to get needles, there is a table infront of the silversmiths house to craft needles from junk items
-    #they are already getting from the game.
-    #world.get_entrance("Silversmith's House -> The Silver Plater").access_rule = \
-    #    lambda state: state.has("needle", player)
 
     world.get_entrance("Circus -> Circus (Inside)").access_rule = \
         lambda state: state.has("Circus Ticket", player)
@@ -335,6 +436,9 @@ def set_region_rules(world: "WOLWorld") -> None:
     world.get_entrance("Soupstock Lode -> El Vibrato Chamber (SL)").access_rule = \
         lambda state: ((state.has("Percussive Maintenance", player) or state.has("Monkey Wrench", player)) and
                         state.has("Pickaxe", player))
+
+    world.get_entrance("Frisco -> End Credits").access_rule = \
+        lambda state: can_goal(state, world)
 
     if options.dlc_enabled:
         if options.randomize_ghost_coach:
@@ -785,6 +889,7 @@ def set_location_rules(world: "WOLWorld") -> None:
     set_rule(world.get_location("Morton's Quarry (Tiny Diverticulum) - Hex Puzzle"),
              lambda state: (state.can_reach_region("Frisco", player) and
                             state.can_reach_region("Dr. Morton's House", player) and
+                            state.can_reach_location("Abandoned Mine (Side Tunnel 2) - Drilling Machine", player) and #since player needs to be able to get in here, this is also required.
                             state.has("Interesting Rock", player) and
                             state.has("Weird Rock Sample", player) and
                             state.has("High-Tech Drill Bit", player)))

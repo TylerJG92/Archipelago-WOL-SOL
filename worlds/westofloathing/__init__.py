@@ -2,6 +2,7 @@ import settings
 from typing import List, Dict, Any
 from BaseClasses import Item, Location, Tutorial, ItemClassification, Region
 from worlds.AutoWorld import WebWorld, World
+from Options import OptionError
 from .options import wol_option_groups, wol_option_presets, WOLOptions
 from .items import item_table, item_name_groups, item_name_to_id, starting_gear_list, extra_filler_list
 from .locations import location_table, location_name_groups, location_name_to_id
@@ -52,6 +53,19 @@ class WOLWorld(World):
     item_name_to_id = item_name_to_id
     location_name_to_id = location_name_to_id
 
+    def generate_early(self):
+        if (not self.options.el_vib_bridge_enabled and
+            not self.options.necro_bridge_enabled and
+            not self.options.breadwood_bridge_enabled):
+            raise OptionError("West of Loathing's yaml requires at least one Bridge Method enabled.")
+
+        if (not self.options.el_crown_enabled and
+            not self.options.necro_crown_enabled and
+            not self.options.gold_crown_enabled and
+            not self.options.turnip_crown_enabled and
+            not self.options.honey_jellybean_enabled):
+            raise OptionError("West of Loathing's yaml requires at least one Norton Method enabled.")
+
     def get_filler_item_name(self) -> str:
         return self.random.choice(extra_filler_list)
 
@@ -60,9 +74,18 @@ class WOLWorld(World):
 
         if not self.options.wander_sanity and name == "Bottle Of Ghost Whiskey":
             classification = ItemClassification.useful
-            return WOLItem(name, classification, self.item_name_to_id[name], self.player)
-
-        return WOLItem(name, classification or item_data.classification, self.item_name_to_id[name], self.player)
+        if not self.options.necro_bridge_enabled and name == "Progressive Nex-Mex Skillbook":
+            classification = ItemClassification.useful
+        if not self.options.el_crown_enabled and name == "El Vibrato Crown":
+            classification = ItemClassification.useful
+        if not self.options.gold_crown_enabled and name == "Gold Tooth Crown":
+            classification = ItemClassification.useful
+        if not self.options.turnip_crown_enabled and name == "Turnip Crown":
+            classification = ItemClassification.useful
+        
+        if classification is None:
+            classification = item_data.classification
+        return WOLItem(name, classification, self.item_name_to_id[name], self.player)
 
     def create_items(self) -> None:
         wol_items: List[WOLItem] = []
@@ -79,6 +102,15 @@ class WOLWorld(World):
 
         if not self.options.randomize_goblintongue:
             items_to_create["English-Goblintongue Dictionary"] = 0
+
+        if not self.options.el_vib_bridge_enabled:
+            items_to_create["El Vibrato Model Bridge"] = 0
+
+        if not self.options.necro_crown_enabled:
+            items_to_create["The Necromancer's Crown"] = 0
+
+        if not self.options.honey_jellybean_enabled:
+            items_to_create["Honey Jelly Bean"] = 0
 
         if not self.options.dlc_enabled:
             for item, data in item_table.items():
@@ -129,7 +161,7 @@ class WOLWorld(World):
             location = WOLLocation(self.player, location_name, location_id, region)
             region.locations.append(location)
 
-        victory_region = self.get_region("Frisco")
+        victory_region = self.get_region("End Credits")
         victory_location = WOLLocation(self.player, "Temp Victory Location", None, victory_region)
         victory_location.place_locked_item(WOLItem("Temp Victory Item", ItemClassification.progression, None, self.player))
         self.multiworld.completion_condition[self.player] = lambda state: state.has("Temp Victory Item", self.player)
@@ -148,7 +180,19 @@ class WOLWorld(World):
             "crate_sanity": self.options.crate_sanity.value,
             "haystack_sanity": self.options.haystack_sanity.value,
             "unbreakable_tools": self.options.unbreakable_tools.value,
-            "deathlink_enabled": self.options.deathlink_enabled.value
+            "deathlink_enabled": self.options.deathlink_enabled.value,
+            "el_vib_bridge_enabled": self.options.el_vib_bridge_enabled.value,
+            "necro_bridge_enabled": self.options.necro_bridge_enabled.value,
+            "breadwood_bridge_enabled": self.options.breadwood_bridge_enabled.value,
+            "bridge_quest_enabled": self.options.bridge_quest_enabled.value,
+            "all_breadwood_quests": self.options.all_breadwood_quests.value,
+            "el_crown_enabled": self.options.el_crown_enabled.value,
+            "necro_crown_enabled": self.options.necro_crown_enabled.value,
+            "gold_crown_enabled": self.options.gold_crown_enabled.value,
+            "turnip_crown_enabled": self.options.turnip_crown_enabled.value,
+            "honey_jellybean_enabled": self.options.honey_jellybean_enabled.value,
+            "norton_quest_enabled": self.options.norton_quest_enabled.value,
+            "horse_selection": self.options.horse_selection.value
         }
 
         return slot_data
