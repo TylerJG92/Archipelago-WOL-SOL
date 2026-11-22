@@ -23,7 +23,7 @@ class WOLWeb(WebWorld):
             language="English",
             file_name="setup_en.md",
             link="setup/en",
-            authors=["Xylen"]
+            authors=["Xylen, TylerJG92"]
         )
     ]
     theme = "dirt"
@@ -31,8 +31,8 @@ class WOLWeb(WebWorld):
     option_groups = wol_option_groups
     options_presets = wol_option_presets
 
-class WOLSettings(settings.Group):
-    """May not need this at all, not sure yet"""
+#class WOLSettings(settings.Group):
+    #"""May not need this at all, not sure yet"""
 
 class WOLWorld(World):
     """
@@ -53,6 +53,13 @@ class WOLWorld(World):
     item_name_to_id = item_name_to_id
     location_name_to_id = location_name_to_id
 
+    #This should pass the slot data to UT
+    @staticmethod
+    def interpret_slot_data(slot_data: Dict[str, Any]) -> Dict[str, Any]:
+        return slot_data
+    #This should allow UT to generate without a yaml
+    ut_can_gen_without_yaml = True
+
     def generate_early(self):
         if (not self.options.el_vib_bridge_enabled and
             not self.options.necro_bridge_enabled and
@@ -65,6 +72,32 @@ class WOLWorld(World):
             not self.options.turnip_crown_enabled and
             not self.options.honey_jellybean_enabled):
             raise OptionError("West of Loathing's yaml requires at least one Norton Method enabled.")
+
+        if hasattr(self.multiworld, "generation_is_fake"):
+            if hasattr(self.multiworld, "re_gen_passthrough"):
+                if "West of Loathing" in self.multiworld.re_gen_passthrough:
+                    slot_data = self.multiworld.re_gen_passthrough["West of Loathing"]
+                    self.options.dlc_enabled.value = slot_data["dlc_enabled"]
+                    self.options.randomize_ghost_coach.value = slot_data["randomize_ghost_coach"]
+                    self.options.randomize_goblintongue.value = slot_data["randomize_goblintongue"]
+                    self.options.wander_sanity.value = slot_data["wander_sanity"]
+                    self.options.crate_sanity.value = slot_data["crate_sanity"]
+                    self.options.haystack_sanity.value = slot_data["haystack_sanity"]
+                    self.options.unbreakable_tools.value = slot_data["unbreakable_tools"]
+                    self.options.deathlink_enabled.value = slot_data["deathlink_enabled"]
+                    self.options.el_vib_bridge_enabled.value = slot_data["el_vib_bridge_enabled"]
+                    self.options.necro_bridge_enabled.value = slot_data["necro_bridge_enabled"]
+                    self.options.breadwood_bridge_enabled.value = slot_data["breadwood_bridge_enabled"]
+                    self.options.bridge_quest_enabled.value = slot_data["bridge_quest_enabled"]
+                    self.options.all_breadwood_quests.value = slot_data["all_breadwood_quests"]
+                    self.options.el_crown_enabled.value = slot_data["el_crown_enabled"]
+                    self.options.necro_crown_enabled.value = slot_data["necro_crown_enabled"]
+                    self.options.gold_crown_enabled.value = slot_data["gold_crown_enabled"]
+                    self.options.turnip_crown_enabled.value = slot_data["turnip_crown_enabled"]
+                    self.options.honey_jellybean_enabled.value = slot_data["honey_jellybean_enabled"]
+                    self.options.norton_quest_enabled.value = slot_data["norton_quest_enabled"]
+                    self.options.horse_selection.value = slot_data["horse_selection"]
+        return
 
     def get_filler_item_name(self) -> str:
         return self.random.choice(extra_filler_list)
