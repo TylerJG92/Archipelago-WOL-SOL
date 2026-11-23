@@ -6,9 +6,11 @@ from Options import (DefaultOnToggle, Toggle, StartInventoryPool, Choice, Range,
 class EnableDLC(Toggle):
     """
     To use this option, you must own the "Reckonin' at Gun Manor" DLC.
+    Disabling this option will still allow the player who owns the DLC to access the DLC,
+    it just is not randomized nor does it contain any check locations.
     """
     internal_name = "dlc_enabled"
-    display_name = "Gun Manor DLC Enabled"
+    display_name = "Gun Manor DLC Randomization Enabled"
 
 class RandomizeGunManorCoach(Toggle):
     """
@@ -74,10 +76,173 @@ class Deathlink(Toggle):
     internal_name = "deathlink_enabled"
     display_name = "Deathlink"
 
+class Horse(Choice):
+    """
+    Choice of horse effects the game in interesting ways, please select your horse here.
+    Normal Horse: Dosent change the game in any way.
+    Pale Horse: Adds random Undead and Nex-Mex Book encounters (Good for Vanilla completion on NexMex Bridge Option.)
+    Dark Horse: Adds options to run from most random encounters without consequences.
+    Crazy Horse: More likely to trigger Random Events and locate locations faster while "Wanderin"
+    """
+    internal_name = "horse_selection"
+    display_name = "Yer Horse"
+    option_normal_horse = 1
+    option_pale_horse = 2
+    option_dark_horse = 3
+    option_crazy_horse = 4
+    default = option_normal_horse
+
+class BridgeMethodElVibrato(DefaultOnToggle):
+    """
+    This option if enabled will allow the "El Vibrato Model Bridge" to remain in the item randomized pool.
+    If dissabled the item will be removed from the pool and thus you cannot use this option to progress to Frisco with.
+
+    Note: At least 1 Bridge Method option must be selected.
+    """
+    internal_name = "el_vib_bridge_enabled"
+    display_name = "Bridge Method: El Vibrato Model Bridge"
+
+class BridgeMethodNecro(DefaultOnToggle):
+    """
+    This option if enabled will allow the collection of 4 NexMex books and being able to get the Unlimited Bones perk from
+    the Buffalo Bone Pile to be used to create the bridge to Frisco.
+    Disabling this option will not remove the NexMex books from randomization, only the ability to build the bridge with
+    them. It will also turn the items from Progressive to Useful in the randomzed pool.
+
+    Note: At least 1 Bridge Method option must be selected.
+    """
+    internal_name = "necro_bridge_enabled"
+    display_name = "Bridge Method: NexMex Bone Bridge"
+
+class BridgeMethodBreadwood(DefaultOnToggle):
+    """
+    This option if enabled will allow the completion of 5 quests for Breadwood to be able to have them build the bridge
+    to Frisco.
+    Disabling this option will not remove the items or quests from the game, just the ability to build the bridge.
+
+    Note: At least 1 Bridge Method option must be selected.
+    """
+    internal_name = "breadwood_bridge_enabled"
+    display_name = "Bridge Method: Breadwood Lumber Bridge"
+
+class BridgeMethodQuest(Toggle):
+    """
+    If enabled this option augments the Bridge Method(s) to require the player to also reach their normal vanilla completion
+    places.
+
+    Bridge Method: El Vibrato Model Bridge will require the player be able to reach the check location 
+    "El Vibrato Construction Facility (Curious Copse) - HOSOM NOAN NOFU" to be able to also build the bridge
+
+    Bridge Method: NexMex Bone Bridge will require the player to be able to reach the bone pile and at least 4 locations
+    where they could have gotten NexMex books.
+
+    Bridge Method: Breadwood Lumber Bridge will require the player to be able to reach the end of 5 questlines for breadwood 
+    to consider the bridge buildable 
+    """
+    internal_name = "bridge_quest_enabled"
+    display_name = "Require Vanilla Completions to build Bridge?"
+
+class AllBreadwoodQuests(Toggle):
+    """
+    If enabled this option augments "Bridge Method: Breadwood Lumber Bridge" further to include all 7 Breadwood Quests
+    to build the Lumber Bridge
+
+    This requires both "Bridge Method: Breadwood Lumber Bridge" and "Bridge Method: Breadwood Lumber Bridge" options
+    enabled to have any effect.
+    """
+    internal_name = "all_breadwood_quests"
+    display_name = "(Breadwood Lumber Bridge Vanilla) Increase number of Breadwood quests?"
+
+class NortonMethodCElVib(DefaultOnToggle):
+    """
+    If enabled this option allows the item "El Vibrato Crown" to be added to the loot needed to complete the game.
+
+    If disabled, the Crown will not be removed from the Randomized pool, but will change from Progressive to Useful
+    and no longer be usable to give to Norton.
+
+    Note: At least 1 option must be selected.
+    """
+    internal_name = "el_crown_enabled"
+    display_name = "Norton Method: El Vibrato Crown"
+
+class NortonMethodCNecro(DefaultOnToggle):
+    """
+    If enabled this option allows the item "The Necromancer's Crown" to be added to the loot needed to complete the game.
+
+    If disabled, the Crown will be removed from the Randomized pool and will not be useable to give to Norton for game
+    completion.
+
+    Note: At least 1 option must be selected.
+    """
+    internal_name = "necro_crown_enabled"
+    display_name = "Norton Method: The Necromancer's Crown"
+
+class NortonMethodCGoldTooth(DefaultOnToggle):
+    """
+    If enabled this option allows the item "Gold Tooth Crown" to be added to the loot needed to complete the game.
+
+    If disabled, the Crown will not be removed from the Randomized pool, but will change from Progressive to Useful
+    and no longer be usable to give to Norton.
+
+    Note: At least 1 option must be selected.
+    """
+    internal_name = "gold_crown_enabled"
+    display_name = "Norton Method: Gold Tooth Crown"
+
+class NortonMethodCTurnip(DefaultOnToggle):
+    """
+    If enabled this option allows the item "Turnip Crown" to be added to the loot needed to complete the game. 
+
+    If disabled, the Crown will not be removed from the Randomized pool, but will change from Progressive to Useful
+    and no longer be usable to give to Norton.
+
+    Note: At least 1 option must be selected.
+    """
+    internal_name = "turnip_crown_enabled"
+    display_name = "Norton Method: Turnip Crown"
+
+class NortonMethodHoneyBean(DefaultOnToggle):
+    """
+    If enabled this option allows the item "Honey Jelly Bean" to be added to the loot needed to complete the game. 
+    Additionally the player will need to be aware they will have to complete the Train Heist quest before completion.
+
+    If disabled, the Honey Jelly Bean will be removed from the Randomized pool and the Train Heist quest will not be
+    an option for the end of the game.
+
+    Note: At least 1 option must be selected.
+    """
+    internal_name = "honey_jellybean_enabled"
+    display_name = "Norton Method: Honey Jelly Bean"
+
+class NortonMethodQuest(Toggle):
+    """
+    If enabled this option will augment the selected Norton Method(s) to require the vanilla method of getting the
+    item as well as getting the item from the randomized pool for game completion.
+
+    Norton Method: El Vibrato Crown will require the player be able to reach the check location "El Vibrato Control
+    Center (Deepest Delve Mine) - El Vibrato Quest Completion" to be able to give the El Vibrato Crown to Norton. 
+
+    Norton Method: The Necromancer's Crown will require the player be able to reach the check location 
+    "Necromancer's Tower - Necromancer Defeated" to be able to give the Necromancers Crown to Norton.
+
+    Norton Method: Gold Tooth Crown will require the player to be able to reach the check location "Fort of Darkness
+    (Second Tent) - Bone Trader (23 Gold Teeth)" to be able to give the Gold Tooth Crown to Norton.
+
+    Norton Method: Turnip Crown will require the player to be able to reach the check location "The Silver Plater
+    - Plated the Turnip" to be able to give the Turnip Crown to Norton. Additionally the ability to eat the
+    Turnip will be turned off if this option is selected with the listed Norton Method.
+
+    Norton Method: Honey Jelly Bean will require the player be able reach the check location "Roy Bean's House - 
+    Honey Bean" to be able to use enter the Train Heist quest.
+    """
+    internal_name = "norton_quest_enabled"
+    display_name = "Require Vanilla Completions for Norton?"
+
 @dataclass
 class WOLOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
 
+    horse_selection: Horse
     dlc_enabled: EnableDLC
     randomize_ghost_coach: RandomizeGunManorCoach
     randomize_goblintongue: RandomizeGoblintongue
@@ -86,8 +251,43 @@ class WOLOptions(PerGameCommonOptions):
     haystack_sanity: HaystackSanity
     unbreakable_tools: UnbreakableTools
     deathlink_enabled: Deathlink
+    el_vib_bridge_enabled: BridgeMethodElVibrato
+    necro_bridge_enabled: BridgeMethodNecro
+    breadwood_bridge_enabled: BridgeMethodBreadwood
+    bridge_quest_enabled: BridgeMethodQuest
+    all_breadwood_quests: AllBreadwoodQuests
+    el_crown_enabled: NortonMethodCElVib
+    necro_crown_enabled: NortonMethodCNecro
+    gold_crown_enabled: NortonMethodCGoldTooth
+    turnip_crown_enabled: NortonMethodCTurnip
+    honey_jellybean_enabled: NortonMethodHoneyBean
+    norton_quest_enabled: NortonMethodQuest
+
 
 wol_option_groups = [
+    OptionGroup("WOLAP World Options", [
+        Horse,
+        UnbreakableTools,
+        RandomizeGoblintongue
+    ], True),
+
+    OptionGroup("Mid Game Bridge Options", [
+        BridgeMethodElVibrato,
+        BridgeMethodNecro,
+        BridgeMethodBreadwood,
+        BridgeMethodQuest,
+        AllBreadwoodQuests
+    ], True),
+
+    OptionGroup("End Game Norton Options", [
+        NortonMethodCTurnip,
+        NortonMethodCGoldTooth,
+        NortonMethodCNecro,
+        NortonMethodCElVib,
+        NortonMethodHoneyBean,
+        NortonMethodQuest
+    ], True),
+
     OptionGroup("Sanity Options", [
         WanderSanity,
         CrateSanity,
