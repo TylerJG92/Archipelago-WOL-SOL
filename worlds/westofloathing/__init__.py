@@ -59,6 +59,7 @@ class WOLWorld(World):
         return slot_data
     #This should allow UT to generate without a yaml
     ut_can_gen_without_yaml = True
+    explicit_indirect_conditions = False
 
     def generate_early(self):
         if (not self.options.el_vib_bridge_enabled and

@@ -326,25 +326,25 @@ def set_region_rules(world: "WOLWorld") -> None:
     world.get_entrance("Dirtwater -> Tony's Boots").access_rule = \
         lambda state: (state.can_reach_region("Fort of Darkness", player) and
                        state.has("A Bunch Of Really Small Guns", player))
-    world.multiworld.register_indirect_condition(world.get_region("Fort of Darkness"), world.get_entrance("Dirtwater -> Tony's Boots"))
+    #world.multiworld.register_indirect_condition(world.get_region("Fort of Darkness"), world.get_entrance("Dirtwater -> Tony's Boots"))
     world.get_entrance("Dirtwater -> Murray's Curiosity & Bean").access_rule = \
         lambda state: can_save_murray(state, world)
-    world.multiworld.register_indirect_condition(world.get_region("Lost Dutch Oven Mine"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
-    world.multiworld.register_indirect_condition(world.get_region("Map Region C"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
-    world.multiworld.register_indirect_condition(world.get_region("Circus"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
-    world.multiworld.register_indirect_condition(world.get_region("Lazy-A Dude Ranch"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
-    world.multiworld.register_indirect_condition(world.get_region("Olive Garden's Homestead"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
-    if world.options.dlc_enabled:
-        world.multiworld.register_indirect_condition(world.get_region("Gun Manor Hedge Maze"), "Dirtwater -> Murray's Curiosity & Bean")
+    #world.multiworld.register_indirect_condition(world.get_region("Lost Dutch Oven Mine"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
+    #world.multiworld.register_indirect_condition(world.get_region("Map Region C"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
+    #world.multiworld.register_indirect_condition(world.get_region("Circus"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
+    #world.multiworld.register_indirect_condition(world.get_region("Lazy-A Dude Ranch"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
+    #world.multiworld.register_indirect_condition(world.get_region("Olive Garden's Homestead"), world.get_entrance("Dirtwater -> Murray's Curiosity & Bean"))
+    #if world.options.dlc_enabled:
+        #world.multiworld.register_indirect_condition(world.get_region("Gun Manor Hedge Maze"), "Dirtwater -> Murray's Curiosity & Bean")
     world.get_entrance("Dirtwater -> Grady's Fine Leather Goods").access_rule = \
         lambda state: (state.can_reach_region("Danny's Tannery", player) and
                        state.has("Tannery Back Door Key", player) and
                        state.has("Tannery St. Rage Key", player))
-    world.multiworld.register_indirect_condition(world.get_region("Danny's Tannery"), world.get_entrance("Dirtwater -> Grady's Fine Leather Goods"))
+    #world.multiworld.register_indirect_condition(world.get_region("Danny's Tannery"), world.get_entrance("Dirtwater -> Grady's Fine Leather Goods"))
     world.get_entrance("Dirtwater -> Alexandria's Bookstore").access_rule = \
         lambda state: (state.can_reach_region("Alexandria Ranch", player) and
                        state.has("Key-Shaped El Vibrato Device", player))
-    world.multiworld.register_indirect_condition(world.get_region("Alexandria Ranch"), world.get_entrance("Dirtwater -> Alexandria's Bookstore"))
+    #world.multiworld.register_indirect_condition(world.get_region("Alexandria Ranch"), world.get_entrance("Dirtwater -> Alexandria's Bookstore"))
 
     world.get_entrance("Dirtwater -> The Perfessor's House").access_rule = \
         lambda state: state.has("Progressive El Vibrato Device", player, 1)
@@ -397,6 +397,26 @@ def set_region_rules(world: "WOLWorld") -> None:
 
     world.get_entrance("Railroad Camp (West) -> Frisco").access_rule = \
         lambda state: can_build_bridge(state, world)
+    #this just didnt work, setting explicit_indirect_conditions to false fixed the issue...
+    # if world.options.necro_bridge_enabled:
+        #world.multiworld.register_indirect_condition(world.get_region("Fort Alldead"), world.get_entrance("Railroad Camp (West) -> Frisco"))
+        #world.multiworld.register_indirect_condition(world.get_region("Chuck's House Cellar"), world.get_entrance("Railroad Camp (West) -> Frisco"))
+        #world.multiworld.register_indirect_condition(world.get_region("Reboot Hill"), world.get_entrance("Railroad Camp (West) -> Frisco"))
+        #world.multiworld.register_indirect_condition(world.get_region("Buffalo Pile"), world.get_entrance("Railroad Camp (West) -> Frisco"))
+        #world.multiworld.register_indirect_condition(world.get_region("Military Cemetery"), world.get_entrance("Railroad Camp (West) -> Frisco"))
+    #if world.options.el_vib_bridge_enabled:
+        #world.multiworld.register_indirect_condition(world.get_region("Curious Copse"), world.get_entrance("Railroad Camp (West) -> Frisco"))
+    #if world.options.breadwood_bridge_enabled:
+        #world.multiworld.register_indirect_condition(world.get_region("Breadwood"), world.get_entrance("Railroad Camp (West) -> Frisco"))
+        #world.multiworld.register_indirect_condition(world.get_region("Ghostwood"), world.get_entrance("Railroad Camp (West) -> Frisco"))
+        #world.multiworld.register_indirect_condition(world.get_region("Ol' Schmaltz Brewery"), world.get_entrance("Railroad Camp (West) -> Frisco"))
+        #world.multiworld.register_indirect_condition(world.get_region("Baker Boys' Hideout"), world.get_entrance("Railroad Camp (West) -> Frisco"))
+        #world.multiworld.register_indirect_condition(world.get_region("Alexandria Ranch"), world.get_entrance("Railroad Camp (West) -> Frisco"))
+        #world.multiworld.register_indirect_condition(world.get_region("Soupstock Lode"), world.get_entrance("Railroad Camp (West) -> Frisco"))
+    #if world.options.necro_bridge_enabled or world.options.breadwood_bridge_enabled:
+        #world.multiworld.register_indirect_condition(world.get_region("Fort Memoriam"), world.get_entrance("Railroad Camp (West) -> Frisco"))
+
+        
 
     world.get_entrance("Frisco -> Wasco's Comedy Shack").access_rule = \
         lambda state: state.has("Comedy Flier", player)
@@ -419,18 +439,18 @@ def set_region_rules(world: "WOLWorld") -> None:
 
     world.get_entrance("Miscellaneous -> Leatherworkery Crafting").access_rule = \
         lambda state: can_leatherwork(state, world)
-    world.multiworld.register_indirect_condition(world.get_region("Hellstrom Ranch"), world.get_entrance("Miscellaneous -> Leatherworkery Crafting"))
+    #world.multiworld.register_indirect_condition(world.get_region("Hellstrom Ranch"), world.get_entrance("Miscellaneous -> Leatherworkery Crafting"))
     #Can get some of the smoldering/infernal leather earlier (Alexandria Ranch/Grizzled Skinner), but to get ALL of them you need access to these regions' encounters
     world.get_entrance("Leatherworkery Crafting -> Leatherworkery Crafting (Level 2)").access_rule = \
         lambda state: state.can_reach_region("Map Region E", player)
-    world.multiworld.register_indirect_condition(world.get_region("Map Region E"), world.get_entrance("Leatherworkery Crafting -> Leatherworkery Crafting (Level 2)"))
+    #world.multiworld.register_indirect_condition(world.get_region("Map Region E"), world.get_entrance("Leatherworkery Crafting -> Leatherworkery Crafting (Level 2)"))
     world.get_entrance("Leatherworkery Crafting -> Leatherworkery Crafting (Level 3)").access_rule = \
         lambda state: state.can_reach_region("Map Region G", player)
-    world.multiworld.register_indirect_condition(world.get_region("Map Region G"), world.get_entrance("Leatherworkery Crafting -> Leatherworkery Crafting (Level 3)"))
+    #world.multiworld.register_indirect_condition(world.get_region("Map Region G"), world.get_entrance("Leatherworkery Crafting -> Leatherworkery Crafting (Level 3)"))
 
     world.get_entrance("Miscellaneous -> Master Cookery Crafting").access_rule = \
         lambda state: can_cook(state, world)
-    world.multiworld.register_indirect_condition(world.get_region("The Great Garbanzo's Hideout"), world.get_entrance("Miscellaneous -> Master Cookery Crafting"))
+    #world.multiworld.register_indirect_condition(world.get_region("The Great Garbanzo's Hideout"), world.get_entrance("Miscellaneous -> Master Cookery Crafting"))
 
     
     world.get_entrance("Soupstock Lode -> El Vibrato Chamber (SL)").access_rule = \
@@ -489,17 +509,6 @@ def set_location_rules(world: "WOLWorld") -> None:
 
     set_rule(world.get_location("Shaggy Dog Cave - Bean-Iron Deposit"),
              lambda state: state.has("Beans Illustrated", player) and state.has("Pickaxe", player))
-
-    #TODO: Unlocking the door to the Silversmith's House requires a needle but not Lockpickin', but don't have a good way to consider needles for logic yet
-    #Leaving here as a note for others, the player can make needles in front of the silversmiths house and gets plenty of items that
-    #they can use to turn into needles
-    #
-    #set_rule(world.get_location("Silversmith's House - Spittoon"),
-    #         lambda state: state.has("Locks And How To Pick Them", player))
-    #set_rule(world.get_location("Silversmith's House - Shelf (Item 1)"),
-    #         lambda state: state.has("Locks And How To Pick Them", player))
-    #set_rule(world.get_location("Silversmith's House - Shelf (Item 2)"),
-    #         lambda state: state.has("Locks And How To Pick Them", player))
 
     set_rule(world.get_location("Silversmith's House - Safe"),
              lambda state: state.has("Get Crackin': A Guide To Modern Safes", player))
@@ -649,7 +658,6 @@ def set_location_rules(world: "WOLWorld") -> None:
                             state.has("Toy Skeletons", player)))
     set_rule(world.get_location("Breadwood Bunkhouse - Footlocker"),
              lambda state: state.has("Locks And How To Pick Them", player))
-    ##Seperating Ghostwood extra since I cant keep them, straight...
 
     set_rule(world.get_location("Ghostwood - Ghost Cactus"),
              lambda state: state.has("Ghostwood Visitor's Permit", player)) ##player needs this for issued permit
