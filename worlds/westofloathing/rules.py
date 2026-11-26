@@ -2,6 +2,7 @@ from ast import And
 from typing import Dict, TYPE_CHECKING
 from worlds.generic.Rules import set_rule, forbid_item, add_rule
 from BaseClasses import CollectionState
+from .regions import map_region_ref_table
 if TYPE_CHECKING:
     from . import WOLWorld
 
@@ -139,28 +140,27 @@ def can_get_breadwood_lumber(state: CollectionState, world: "WOLWorld") -> bool:
     if not state.can_reach_region("Breadwood", player): return False
 
     need = 5
+
     if world.options.bridge_quest_enabled:
         if world.options.all_breadwood_quests:
-            need = 7 
+            need = 7
 
-    if world.options.breadwood_bridge_enabled:
-        if world.options.bridge_quest_enabled:
-            ghostwoodQuest = (state.has("NE North Central Logging Permit", player) and 
+        ghostwoodQuest = (state.has("NE North Central Logging Permit", player) and 
                           state.can_reach_location("Ghostwood Town Hall - Permit Finally Processed", player))
-            mail = (state.has("Breadwood's Missing Mail", player) and
-                    state.can_reach_location("Chuck's House Cellar - Mail Bag", player))
-            yeast = (state.has("Half A Ton Of Yeast", player) and
-                     state.can_reach_location("Ol' Schmaltz Brewery - Deceased Yeast Beast", player))
-            bread = (state.has("Forty Loaves Of Bread", player) and
-                     state.can_reach_location("Baker Boys' Hideout - Bread Recovered", player))
-            book = (state.has("Overdue Breadwood Book", player) and
-                    state.can_reach_location("Alexandria Ranch - Smoldering Book Pile", player))
-        else:
-            ghostwoodQuest = state.has("NE North Central Logging Permit", player)
-            mail = state.has("Breadwood's Missing Mail", player)
-            yeast = state.has("Half A Ton Of Yeast", player)
-            bread = state.has("Forty Loaves Of Bread", player)
-            book = state.has("Overdue Breadwood Book", player)
+        mail = (state.has("Breadwood's Missing Mail", player) and
+                state.can_reach_location("Chuck's House Cellar - Mail Bag", player))
+        yeast = (state.has("Half A Ton Of Yeast", player) and
+                 state.can_reach_location("Ol' Schmaltz Brewery - Deceased Yeast Beast", player))
+        bread = (state.has("Forty Loaves Of Bread", player) and
+                 state.can_reach_location("Baker Boys' Hideout - Bread Recovered", player))
+        book = (state.has("Overdue Breadwood Book", player) and
+                state.can_reach_location("Alexandria Ranch - Smoldering Book Pile", player))
+    else:
+        ghostwoodQuest = state.has("NE North Central Logging Permit", player)
+        mail = state.has("Breadwood's Missing Mail", player)
+        yeast = state.has("Half A Ton Of Yeast", player)
+        bread = state.has("Forty Loaves Of Bread", player)
+        book = state.has("Overdue Breadwood Book", player)
 
     count = 0 
     count += (
@@ -269,7 +269,22 @@ def can_goal(state: CollectionState, world: "WOLWorld") -> bool:
     options = world.options
     vanilla = options.norton_quest_enabled
 
-    if not state.can_reach_region("Frisco", player): return False
+    if options.region_lock.value != options.region_lock.option_chaotic:
+        if not state.can_reach_region("Frisco", player):
+            return False
+        chaos = True #needs to be true so the bool dosent freak out with the goal condition.
+    else:
+        if (not state.can_reach_region("Frisco", player) and
+            not state.can_reach_region("Railroad Camp (West)", player) and
+            not state.can_reach_region("Railroad Camp (East)", player)):
+            return False
+        chaos = ( #basically if chaos is active we are still gating the goal behind the main quests completion so the player still will need to get the items and their gates to get the train to frisco to start nortons last quest for goal.
+            (state.has("A Year's Supply Of Dynamite", player) and
+             state.has("Comfortable Saddle", player)) and
+            (state.has("Horse's Anti-Neigh-Cromancy Amulet", player) and
+             can_build_bridge(state, world)) and
+            state.has("Horse's Hard Hat", player) #the check for nortons item comes later in this helper.
+        )
 
     if options.honey_jellybean_enabled:
         if vanilla:
@@ -312,12 +327,62 @@ def can_goal(state: CollectionState, world: "WOLWorld") -> bool:
     else: el = False
 
     return (
-        jellybean or
+        (jellybean or
         turnip or
         gold or
         necro or
-        el
+        el) and
+        chaos
     )
+
+def set_region_lock_rules(world: "WOLWorld") -> None:
+    player = world.player
+    region_lock = world.options.region_lock
+    regions = map_region_ref_table
+
+    if region_lock.value == region_lock.option_progressive:
+        for region, region_locations in regions.items():
+            if region == "Region A":
+                continue #Region A is unlocked by default for the Region Lock, Anything in my ref table in Region A will need to keep its current access rules
+            for region_name in region_locations:
+                for entrance in world.get_region(region_name).entrances:
+                    match region:
+                        case "Region B":
+                            add_rule(entrance, lambda state: state.has("Progressive Region Unlock", player, 1))
+                        case "Region C":
+                            add_rule(entrance, lambda state: state.has("Progressive Region Unlock", player, 2))
+                        case "Region D":
+                            add_rule(entrance, lambda state: state.has("Progressive Region Unlock", player, 4)) #Intentional, Region E unlocks before D can be accessed.
+                        case "Region E":
+                            add_rule(entrance, lambda state: state.has("Progressive Region Unlock", player, 3))
+                        case "Region F":
+                            add_rule(entrance, lambda state: state.has("Progressive Region Unlock", player, 5))
+                        case "Region G":
+                            add_rule(entrance, lambda state: state.has("Progressive Region Unlock", player, 6))
+                        case "Region H":
+                            add_rule(entrance, lambda state: state.has("Progressive Region Unlock", player, 7))
+
+    if region_lock.value == region_lock.option_chaotic:
+        for region, region_locations in regions.items():
+            if region == "Region A":
+                continue
+            for region_name in region_locations:
+                for entrance in world.get_region(region_name).entrances:
+                    match region:
+                        case "Region B":
+                            add_rule(entrance, lambda state: state.has("Comfortable Saddle", player))
+                        case "Region C":
+                            add_rule(entrance, lambda state: state.has("Horse's Nose Plugs", player))
+                        case "Region D":
+                            add_rule(entrance, lambda state: state.has("Rubber Horse Shoes", player))
+                        case "Region E":
+                            add_rule(entrance, lambda state: state.has("Horse's Anti-Neigh-Cromancy Amulet", player))
+                        case "Region F":
+                            add_rule(entrance, lambda state: state.has("Horse's Cool Shades", player))
+                        case "Region G":
+                            add_rule(entrance, lambda state: state.has("Horse's Hard Hat", player))
+                        case "Region H":
+                            add_rule(entrance, lambda state: state.has("Horse's Warming Jacket", player))
 
 def set_region_rules(world: "WOLWorld") -> None:
     player = world.player
@@ -394,7 +459,7 @@ def set_region_rules(world: "WOLWorld") -> None:
         lambda state: (state.has_group("Necromancer Clues", player, 5) and
                        state.can_reach_region("The Perfessor's House", player) and
                        state.has("Mycology, Yourcology", player))
-
+    
     world.get_entrance("Railroad Camp (West) -> Frisco").access_rule = \
         lambda state: can_build_bridge(state, world)
     #this just didnt work, setting explicit_indirect_conditions to false fixed the issue...
@@ -417,9 +482,9 @@ def set_region_rules(world: "WOLWorld") -> None:
         #world.multiworld.register_indirect_condition(world.get_region("Fort Memoriam"), world.get_entrance("Railroad Camp (West) -> Frisco"))
 
         
-
-    world.get_entrance("Frisco -> Wasco's Comedy Shack").access_rule = \
-        lambda state: state.has("Comedy Flier", player)
+    if world.options.region_lock.value == world.options.region_lock.option_none:
+        world.get_entrance("Frisco -> Wasco's Comedy Shack").access_rule = \
+            lambda state: state.has("Comedy Flier", player)        
 
     world.get_entrance("Abandoned Mine -> Abandoned Mine (Inside)").access_rule = \
         lambda state:  (state.has("Monkey Wrench", player) or

@@ -6,8 +6,8 @@ from Options import (DefaultOnToggle, Toggle, StartInventoryPool, Choice, Range,
 class EnableDLC(Toggle):
     """
     To use this option, you must own the "Reckonin' at Gun Manor" DLC.
-    Disabling this option will still allow the player who owns the DLC to access the DLC,
-    it just is not randomized nor does it contain any check locations.
+    Disabling this option does disable the DLC even if you have it 
+    installed.
     """
     internal_name = "dlc_enabled"
     display_name = "Gun Manor DLC Randomization Enabled"
@@ -238,6 +238,23 @@ class NortonMethodQuest(Toggle):
     internal_name = "norton_quest_enabled"
     display_name = "Require Vanilla Completions for Norton?"
 
+class RegionLock(Choice):
+    """
+    If enabled this will lock each region to a specific item that will be randomized and needs to be sent to the player to
+    unlock the next region.
+    None: The game will not be region locked, you can progress to each region as you could in vanilla.
+    Progressive: Region unlocks are sequential, Unlocking in this order; A -> B -> C -> E -> D -> F -> G -> H; if DLC is
+    enabled it will unlock with region A so may be available from the begining of the game.
+    Chaotic: Regions are tied to an item and can unlock any region at any time. (Note for game balance you will still need
+    to get its normal unlock location)
+    """
+    internal_name = "region_lock"
+    display_name = "Region Lock"
+    option_none = 0
+    option_progressive = 1
+    option_chaotic = 2
+    default = option_none
+
 @dataclass
 class WOLOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
@@ -262,11 +279,13 @@ class WOLOptions(PerGameCommonOptions):
     turnip_crown_enabled: NortonMethodCTurnip
     honey_jellybean_enabled: NortonMethodHoneyBean
     norton_quest_enabled: NortonMethodQuest
+    region_lock: RegionLock
 
 
 wol_option_groups = [
     OptionGroup("WOLAP World Options", [
         Horse,
+        RegionLock,
         UnbreakableTools,
         RandomizeGoblintongue
     ], True),

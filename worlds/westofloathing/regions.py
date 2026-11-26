@@ -117,7 +117,8 @@ basegame_region_table: Dict[str, Set[str]] = {
     "Old Cave": set(),
     "Alamo Rent-A-Mule": {"Map Region H", "Deepest Delve Mine"},
     "Map Region H": {"Alamo Rent-A-Mule", "Curious False Mountain", "Curious Flat Plain", "Deepest Delve Mine",
-                     "Halloway's Hideaway", "Moonshine Still", "Olive Garden's Homestead", "Random Encounters H"},
+                     "Halloway's Hideaway", "Moonshine Still", "Olive Garden's Homestead", "Random Encounters H", 
+                     "Wasco's Comedy Shack"},
     "Deepest Delve Mine": {"Deepest Delve Mine (Elevator Fixed)"},
     "Deepest Delve Mine (Elevator Fixed)": set(),
     "Curious False Mountain": set(),
@@ -133,6 +134,26 @@ basegame_region_table: Dict[str, Set[str]] = {
     "Leatherworkery Crafting (Level 3)": set(),
     "Master Cookery Crafting": set(),
     "Progressive Containers": set()
+}
+
+map_region_ref_table: Dict[str, Set[str]] = {
+    "Region A": {"Dirtwater", "Desert House", "Cavern Canyon", "Map Region A", "The Daveyard", "Fort Cowardice", "Tony's Boots", "Murray's Curiosity & Bean",
+                 "Grady's Fine Leather Goods", "Alexandria's Bookstore", "Shaggy Dog Cave", "Silversmith's House", "Stearns Ranch", "Snakepit Mine", 
+                 "Buttonwillow's Store", "Fort Cowardice", "Wanderin' Sally's Camp", "Random Encounters A", "Danny's Tannery", "Gun Manor"},
+    "Region B": {"Random Encounters B", "Map Region B", "Butterfield Ranch", "Kaye Ridge Mine", "Dynamite Dan's", "Snake Spring", "Old Mission",
+                 "Destroyed Campsite", "The Big Apple", "Clown Campsite", "Gustavson Gulch", "Railroad Camp (East)", "The Perfessor's House"},
+    "Region C": {"Random Encounters C", "Map Region C", "Rescue Mission", "Fort Alldead", "Lazy-A Dude Ranch", "Humming Cave", "Circus", "Lost Dutch Oven Mine", 
+                 "The Potemkin Gang", "Old Millinery", "Abandoned Pickle Factory", "The Silver Plater"},
+    "Region D": {"Random Encounters D", "Map Region D", "Alexandria Ranch", "Curious Abandoned Well", "Curious Copse", "Fort Treason", "Ghostwood",
+                 "Jumbleneck Mine", "Military Cemetery", "Breadwood", "Chuck's House", "Ol' Schmaltz Brewery", "Postal Way Station"},
+    "Region E": {"Random Encounters E", "Map Region E", "Reboot Hill", "Hellstrom Ranch", "Soupstock Lode", "The West Pole", "The Great Garbanzo's Hideout",
+                 "The Old Medicine Show", "Baker Boys' Hideout", "Necromancer's Tower", "Railroad Camp (West)", "Fort Memoriam"},
+    "Region F": {"Random Encounters F", "Map Region F", "Buffalo Pile", "Petting Cemetery", "Kellogg Ranch", "Madness Maw Mine",
+                 "Roy Bean's House", "Fort of Darkness", "Jelly Bean Thieves' Hideout", "Ol' Granddad", "Shroomcave"},
+    "Region G": {"Random Encounters G", "Map Region G", "Abandoned Mine", "Dr. Morton's House", "Fort Unnecessary", "Frisco", "Jeweler's Cabin", 
+                 "Last Custard Stand", "Old Cave"},
+    "Region H": {"Random Encounters H", "Map Region H", "Alamo Rent-A-Mule", "Curious False Mountain", "Curious Flat Plain", "Deepest Delve Mine", 
+                 "Moonshine Still", "Olive Garden's Homestead", "Wasco's Comedy Shack"}
 }
 
 dlc_region_table: Dict[str, Set[str]] = {
@@ -174,3 +195,9 @@ dlc_region_table: Dict[str, Set[str]] = {
 
 combined_dlc_region_table = copy.deepcopy(basegame_region_table | dlc_region_table)
 combined_dlc_region_table["Dirtwater"].add("Gun Manor")
+
+adjusted_base_region_table = copy.deepcopy(basegame_region_table)
+adjusted_base_region_table["Dirtwater"].update({"Frisco", "Fort Alldead", "Railroad Camp (West)", "Roy Bean's House", "Alamo Rent-A-Mule"})
+
+combined_adjusted_dlc_region_table = copy.deepcopy(adjusted_base_region_table | dlc_region_table)
+combined_adjusted_dlc_region_table["Dirtwater"].add("Gun Manor")

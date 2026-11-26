@@ -8,6 +8,9 @@ class WOLItemData(NamedTuple):
     is_dlc: bool = False
     is_wandersanity: bool = False
     is_cratesanity: bool = False
+    prog_region_lock: bool = False
+    region_lock: bool = False
+    remove_for_region_lock: bool = False
     default_starting_gear: bool = False
     extras_eligible: bool = False
 
@@ -390,7 +393,7 @@ item_table: Dict[str, WOLItemData] = {
     "Circus Show Ticket": WOLItemData(ItemClassification.progression, {"Quest Items"}),
     "Circus Ticket": WOLItemData(ItemClassification.progression, {"Quest Items"}),
     "Clip-On Bow Tie": WOLItemData(ItemClassification.filler, {"Quest Items"}),
-    "Comedy Flier": WOLItemData(ItemClassification.progression_deprioritized, {"Quest Items"}),
+    "Comedy Flier": WOLItemData(ItemClassification.progression_deprioritized, {"Quest Items"}, remove_for_region_lock=True),
     "Creepy Whispering Stone": WOLItemData(ItemClassification.filler, {"Quest Items"}),
     "Cryptic Note About Ley Lines": WOLItemData(ItemClassification.progression, {"Quest Items", "Necromancer Clues"}),
     "Dave's Secret Sauce Recipe": WOLItemData(ItemClassification.progression, {"Quest Items"}),
@@ -430,7 +433,7 @@ item_table: Dict[str, WOLItemData] = {
     "Jumbleneck Mine Elevator Key": WOLItemData(ItemClassification.progression, {"Quest Items"}),
     "Kellogg Ranch Keyring": WOLItemData(ItemClassification.progression, {"Quest Items"}),
     "Kellogg Ranch Workout Regimen": WOLItemData(ItemClassification.filler, {"Quest Items"}),
-    "Kellogg Ranch Brochure": WOLItemData(ItemClassification.filler, {"Quest Items"}, is_wandersanity=True),
+    "Kellogg Ranch Brochure": WOLItemData(ItemClassification.filler, {"Quest Items"}, is_wandersanity=True, remove_for_region_lock=True),
     "Kellogg's Grain Flakes Recipe": WOLItemData(ItemClassification.filler, {"Quest Items"}),
     "Key Fragment 1": WOLItemData(ItemClassification.progression, {"Quest Items"}),
     "Key Fragment 2": WOLItemData(ItemClassification.progression, {"Quest Items"}),
@@ -447,7 +450,7 @@ item_table: Dict[str, WOLItemData] = {
     "Mary Stearns' Diary": WOLItemData(ItemClassification.filler, {"Quest Items"}),
     "Mrs. Gun's Blueprint": WOLItemData(ItemClassification.progression, {"Quest Items"}, is_dlc=True),
     "Mule Rental Contract": WOLItemData(ItemClassification.useful, {"Quest Items"}),
-    "Mushroom Map": WOLItemData(ItemClassification.filler, {"Quest Items"}),
+    "Mushroom Map": WOLItemData(ItemClassification.filler, {"Quest Items"}, remove_for_region_lock=True),
     "Mushroom Plucking Pliers": WOLItemData(ItemClassification.progression, {"Quest Items"}),
     "Nearly-Empty Herbicide Can": WOLItemData(ItemClassification.filler, {"Quest Items"}, is_dlc=True),
     "Overdue Breadwood Book": WOLItemData(ItemClassification.progression, {"Quest Items"}),
@@ -603,7 +606,15 @@ item_table: Dict[str, WOLItemData] = {
     "5000 Meat": WOLItemData(ItemClassification.progression_deprioritized, {"Currency"}, 2),
     "1000 Meat": WOLItemData(ItemClassification.useful, {"Currency"}, 3),
     "100 Meat": WOLItemData(ItemClassification.filler, {"Currency"}, 5, extras_eligible=True),
-    "Stardust": WOLItemData(ItemClassification.progression, {"Consumables", "Potions"})
+    "Stardust": WOLItemData(ItemClassification.progression, {"Consumables", "Potions"}),
+    "Progressive Region Unlock": WOLItemData(ItemClassification.progression, {"Region"}, 7, prog_region_lock= True),
+    "Comfortable Saddle": WOLItemData(ItemClassification.progression, {"Region"}, region_lock= True), #region B unlock
+    "Horse's Nose Plugs": WOLItemData(ItemClassification.progression, {"Region"}, region_lock= True), # c unlock
+    "Rubber Horse Shoes": WOLItemData(ItemClassification.progression, {"Region"}, region_lock= True), #d unlock
+    "Horse's Anti-Neigh-Cromancy Amulet": WOLItemData(ItemClassification.progression, {"Region"}, region_lock= True), #e unlock
+    "Horse's Cool Shades": WOLItemData(ItemClassification.progression, {"Region"}, region_lock= True), #f unlock
+    "Horse's Hard Hat": WOLItemData(ItemClassification.progression, {"Region"}, region_lock= True), #g unlock
+    "Horse's Warming Jacket": WOLItemData(ItemClassification.progression, {"Region"}, region_lock= True), #h unlock
 }
 
 starting_gear_list: List[str] = [name for name, data in item_table.items() if data.default_starting_gear]
@@ -633,7 +644,8 @@ item_categories = {
     "Stench Resistance",
     "Hot Resistance",
     "Cold Resistance",
-    "Currency"
+    "Currency",
+    "Region"
 }
 
 item_name_groups: Dict[str, Set[str]] = {}

@@ -6,8 +6,8 @@ from Options import OptionError
 from .options import wol_option_groups, wol_option_presets, WOLOptions
 from .items import item_table, item_name_groups, item_name_to_id, starting_gear_list, extra_filler_list
 from .locations import location_table, location_name_groups, location_name_to_id
-from .regions import basegame_region_table, combined_dlc_region_table
-from .rules import set_location_rules, set_region_rules
+from .regions import basegame_region_table, combined_dlc_region_table, adjusted_base_region_table, combined_adjusted_dlc_region_table
+from .rules import set_location_rules, set_region_rules, set_region_lock_rules
 
 class WOLLocation(Location):
     game: str = "West of Loathing"
@@ -98,6 +98,7 @@ class WOLWorld(World):
                     self.options.honey_jellybean_enabled.value = slot_data["honey_jellybean_enabled"]
                     self.options.norton_quest_enabled.value = slot_data["norton_quest_enabled"]
                     self.options.horse_selection.value = slot_data["horse_selection"]
+                    self.options.region_lock.value = slot_data["region_lock"]
         return
 
     def get_filler_item_name(self) -> str:
@@ -161,6 +162,19 @@ class WOLWorld(World):
                 if data.is_cratesanity:
                     items_to_create[item] = 0
 
+        if self.options.region_lock == self.options.region_lock.option_none:
+            for item, data in item_table.items():
+                if data.region_lock or data.prog_region_lock:
+                    items_to_create[item] = 0
+        elif self.options.region_lock == self.options.region_lock.option_progressive:
+            for item, data, in item_table.items():
+                if data.region_lock or data.remove_for_region_lock:
+                    items_to_create[item] = 0
+        elif self.options.region_lock == self.options.region_lock.option_chaotic:
+            for item, data in item_table.items():
+                if data.prog_region_lock or data.remove_for_region_lock:
+                    items_to_create[item] = 0
+
         for item, quantity in items_to_create.items():
             for _ in range(quantity):
                 wol_items.append(self.create_item(item))
@@ -171,8 +185,12 @@ class WOLWorld(World):
         self.multiworld.itempool += wol_items
 
     def create_regions(self) -> None:
-        if self.options.dlc_enabled:
+        if self.options.dlc_enabled and not self.options.region_lock.value == 2:
             region_table = combined_dlc_region_table
+        elif not self.options.dlc_enabled and self.options.region_lock.value == 2:
+            region_table = adjusted_base_region_table
+        elif self.options.dlc_enabled and self.options.region_lock.value == 2:
+            region_table = combined_adjusted_dlc_region_table
         else:
             region_table = basegame_region_table
 
@@ -203,6 +221,7 @@ class WOLWorld(World):
 
     def set_rules(self) -> None:
         set_region_rules(self)
+        set_region_lock_rules(self)
         set_location_rules(self)
 
     def fill_slot_data(self) -> Dict[str, Any]:
@@ -226,7 +245,8 @@ class WOLWorld(World):
             "turnip_crown_enabled": self.options.turnip_crown_enabled.value,
             "honey_jellybean_enabled": self.options.honey_jellybean_enabled.value,
             "norton_quest_enabled": self.options.norton_quest_enabled.value,
-            "horse_selection": self.options.horse_selection.value
+            "horse_selection": self.options.horse_selection.value,
+            "region_lock": self.options.region_lock.value
         }
 
         return slot_data
