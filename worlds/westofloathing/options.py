@@ -5,9 +5,9 @@ from Options import (DefaultOnToggle, Toggle, StartInventoryPool, Choice, Range,
 
 class EnableDLC(Toggle):
     """
-    To use this option, you must own the "Reckonin' at Gun Manor" DLC.
-    Disabling this option will still allow the player who owns the DLC to access the DLC,
-    it just is not randomized nor does it contain any check locations.
+    To use this option, you MUST own the "Reckonin' at Gun Manor" DLC.
+    Disabling this option does disable the DLC even if you have it 
+    installed.
     """
     internal_name = "dlc_enabled"
     display_name = "Gun Manor DLC Randomization Enabled"
