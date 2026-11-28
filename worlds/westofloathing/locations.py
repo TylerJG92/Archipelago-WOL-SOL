@@ -688,6 +688,12 @@ location_table: Dict[str, WOLLocationData] = {
     "Haystack Sanity - 14th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
     "Haystack Sanity - 15th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
     "Haystack Sanity - 16th Haystack": WOLLocationData("Miscellaneous", "Miscellaneous", is_haystacksanity=True),
+    "Dirtwater Band - Recruit Wasco": WOLLocationData("Wasco's Comedy Shack", "Wasco's Comedy Shack"),
+    "Dirtwater Band - Recruit Jaw Harp Player": WOLLocationData("Fort of Darkness", "Fort of Darkness"),
+    "Dirtwater Band - Recruit Washboard Player": WOLLocationData("Breadwood", "Breadwood"),
+    "Dirtwater Band - Recruit Guitar Man": WOLLocationData("Fort Memoriam", "Fort Memoriam"),
+    "Dirtwater Band - Recruit Booper": WOLLocationData("Curious Abandoned Well Facility", "Curious Abandoned Well"),
+    "Dirtwater Band - Watch The Aristocrats Play (Ring The Bell)": WOLLocationData("Dirtwater", "Dirtwater"),
 }
 
 location_name_to_id: Dict[str, int] = {name: base_id + index for index, name in enumerate(location_table)}

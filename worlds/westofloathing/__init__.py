@@ -168,11 +168,11 @@ class WOLWorld(World):
                     items_to_create[item] = 0
         elif self.options.region_lock == self.options.region_lock.option_progressive:
             for item, data, in item_table.items():
-                if data.region_lock or data.remove_for_region_lock:
+                if data.region_lock:
                     items_to_create[item] = 0
         elif self.options.region_lock == self.options.region_lock.option_chaotic:
             for item, data in item_table.items():
-                if data.prog_region_lock or data.remove_for_region_lock:
+                if data.prog_region_lock:
                     items_to_create[item] = 0
 
         for item, quantity in items_to_create.items():

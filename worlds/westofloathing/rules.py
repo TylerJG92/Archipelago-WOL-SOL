@@ -283,7 +283,7 @@ def can_goal(state: CollectionState, world: "WOLWorld") -> bool:
              state.has("Comfortable Saddle", player)) and
             (state.has("Horse's Anti-Neigh-Cromancy Amulet", player) and
              can_build_bridge(state, world)) and
-            state.has("Horse's Hard Hat", player) #the check for nortons item comes later in this helper.
+            state.has("Horse's H.O.R.S.E Badge (Horses Organization of Real Safety Enthusiests)", player) #the check for nortons item comes later in this helper.
         )
 
     if options.honey_jellybean_enabled:
@@ -380,9 +380,9 @@ def set_region_lock_rules(world: "WOLWorld") -> None:
                         case "Region F":
                             add_rule(entrance, lambda state: state.has("Horse's Cool Shades", player))
                         case "Region G":
-                            add_rule(entrance, lambda state: state.has("Horse's Hard Hat", player))
+                            add_rule(entrance, lambda state: state.has("Horse's H.O.R.S.E Badge (Horses Organization of Real Safety Enthusiests)", player))
                         case "Region H":
-                            add_rule(entrance, lambda state: state.has("Horse's Warming Jacket", player))
+                            add_rule(entrance, lambda state: state.has("Horse's Hoarse Throat Spray", player))
 
 def set_region_rules(world: "WOLWorld") -> None:
     player = world.player
@@ -481,10 +481,8 @@ def set_region_rules(world: "WOLWorld") -> None:
     #if world.options.necro_bridge_enabled or world.options.breadwood_bridge_enabled:
         #world.multiworld.register_indirect_condition(world.get_region("Fort Memoriam"), world.get_entrance("Railroad Camp (West) -> Frisco"))
 
-        
-    if world.options.region_lock.value == world.options.region_lock.option_none:
-        world.get_entrance("Frisco -> Wasco's Comedy Shack").access_rule = \
-            lambda state: state.has("Comedy Flier", player)        
+    world.get_entrance("Frisco -> Wasco's Comedy Shack").access_rule = \
+        lambda state: state.has("Comedy Flier", player)        
 
     world.get_entrance("Abandoned Mine -> Abandoned Mine (Inside)").access_rule = \
         lambda state:  (state.has("Monkey Wrench", player) or
@@ -556,6 +554,12 @@ def set_location_rules(world: "WOLWorld") -> None:
                             can_get_murder_pepper(state, world) and
                             state.has("Saute Knife", player) and
                             state.has("Dave's Secret Sauce Recipe", player)))
+    set_rule(world.get_location("Dirtwater Band - Watch The Aristocrats Play (Ring The Bell)"),
+             lambda state: state.can_reach_location("Dirtwater Band - Recruit Wasco", player) and
+                           state.can_reach_location("Dirtwater Band - Recruit Jaw Harp Player", player) and
+                           state.can_reach_location("Dirtwater Band - Recruit Washboard Player", player) and
+                           state.can_reach_location("Dirtwater Band - Recruit Guitar Man", player) and
+                           state.can_reach_location("Dirtwater Band - Recruit Booper", player))
     set_rule(world.get_location("Dirtwater Post Office - Postal Codes"),
              lambda state: state.can_reach_region("Postal Way Station", player))
     set_rule(world.get_location("Dirtwater Post Office - P.O. Box 114"),
@@ -650,7 +654,11 @@ def set_location_rules(world: "WOLWorld") -> None:
                             state.has("Gustavson Gulch Treasure Cave Key", player) or
                             state.has("Gustavson Gulch Treasure Cave Key (Spare)", player))
     set_rule(world.get_location("Railroad Camp (East) - Rock Monster's Remains (Dr. Morton's Quest)"),
-             lambda state: state.can_reach_region("Frisco", player))
+             lambda state: (state.can_reach_region("Frisco", player) and
+                            state.can_reach_region("Map Region B", player) and
+                            state.has("A Year's Supply Of Dynamite", player)))
+    set_rule(world.get_location("Year Supply of Dynamite Crafted - 52 Dynamite"),
+             lambda state: state.can_reach_region("Map Region B", player))
     set_rule(world.get_location("Kaye Ridge Mine (Level 2) - Triangular Stones"),
              lambda state: (state.has("A Length Of Rope", player) and
                             state.has("Shovel", player) and
@@ -797,7 +805,10 @@ def set_location_rules(world: "WOLWorld") -> None:
     set_rule(world.get_location("Curly's Cairn (Alexandria Ranch) - Under the Cairn"),
              lambda state: state.has("Progressive Curly's Meat", player, 1))
     set_rule(world.get_location("Roy Bean's House - Honey Bean"),
-             lambda state: state.can_reach_region("Frisco", player))
+             lambda state: (state.can_reach_region("Frisco", player) and
+                            (state.has("A Year's Supply Of Dynamite", player) and
+                             state.can_reach_region("Map Region B", player)) and
+                            can_build_bridge(state, world)))
     set_rule(world.get_location("Jelly Bean Thieves' Hideout - Crate Beside Bed"),
              lambda state: state.has("Crowbar", player))
     set_rule(world.get_location("Shroomcave - First Magic Mushroom"),
@@ -817,6 +828,8 @@ def set_location_rules(world: "WOLWorld") -> None:
                             state.can_reach_region("Fort of Darkness", player))) #To trade for Dirtihippica extract
     set_rule(world.get_location("Fort of Darkness (First Tent) - Free Mushroom"),
              lambda state: state.has("Mind Your Meat", player))
+    set_rule(world.get_location("Dirtwater Band - Recruit Jaw Harp Player"),
+             lambda state: state.has("Jaw Harp", player))
     set_rule(world.get_location("Fort of Darkness (Fifth Tent) - Gun Safe"),
              lambda state: state.has("Get Crackin': A Guide To Modern Safes", player))
     set_rule(world.get_location("Fort of Darkness - Temporal Rift"),
@@ -1136,17 +1149,47 @@ def set_location_rules(world: "WOLWorld") -> None:
 
     if options.crate_sanity:
         set_rule(world.get_location("Crate Sanity - 3rd Medical Container"),
-                     lambda state: state.has("Crowbar", player) or
-                                   state.has("Locks And How To Pick Them", player) or
-                                   state.can_reach_region("Map Region D", player))
+                     lambda state: (state.has("Crowbar", player) and
+                                    (state.can_reach_region("Map Region B", player) or
+                                     state.can_reach_region("Map Region C", player) or
+                                     state.can_reach_region("Map Region E", player) or
+                                     state.can_reach_region("Map Region F", player) or #this lets us open the crates without getting angry...
+                                     state.can_reach_region("Map Region G", player) or
+                                     state.can_reach_region("Map Region H", player))) or
+
+                                   (state.has("Locks And How To Pick Them", player) and
+                                    state.can_reach_region("Map Region B", player)) or
+                                    
+                                   state.can_reach_region("Map Region D", player)) #or 
+                                   #state.can_reach_region("Map Region F", player))# Lets not include this, and instead make it glitched logic. player will need to gain anger over and over again to do it this way
         set_rule(world.get_location("Crate Sanity - 6th Medical Container"),
-                     lambda state: state.has("Crowbar", player) or
-                                   state.has("Locks And How To Pick Them", player) or
-                                   state.can_reach_region("Map Region D", player))
+                     lambda state: (state.has("Crowbar", player) and
+                                    (state.can_reach_region("Map Region B", player) or
+                                     state.can_reach_region("Map Region C", player) or
+                                     state.can_reach_region("Map Region E", player) or
+                                     state.can_reach_region("Map Region F", player) or #this lets us open the crates without getting angry...
+                                     state.can_reach_region("Map Region G", player) or
+                                     state.can_reach_region("Map Region H", player))) or
+
+                                   (state.has("Locks And How To Pick Them", player) and
+                                    state.can_reach_region("Map Region B", player)) or
+                                    
+                                   state.can_reach_region("Map Region D", player)) #or 
+                                   #state.can_reach_region("Map Region F", player))# Lets not include this, and instead make it glitched logic. player will need to gain anger over and over again to do it this way
         set_rule(world.get_location("Crate Sanity - 9th Medical Container"),
-                     lambda state: state.has("Crowbar", player) or
-                                   state.has("Locks And How To Pick Them", player) or
-                                   state.can_reach_region("Map Region D", player))
+                     lambda state: (state.has("Crowbar", player) and
+                                    (state.can_reach_region("Map Region B", player) or
+                                     state.can_reach_region("Map Region C", player) or
+                                     state.can_reach_region("Map Region E", player) or
+                                     state.can_reach_region("Map Region F", player) or #this lets us open the crates without getting angry...
+                                     state.can_reach_region("Map Region G", player) or
+                                     state.can_reach_region("Map Region H", player))) or
+
+                                   (state.has("Locks And How To Pick Them", player) and
+                                    state.can_reach_region("Map Region B", player)) or
+                                    
+                                   state.can_reach_region("Map Region D", player)) #or 
+                                   #state.can_reach_region("Map Region F", player))# Lets not include this, and instead make it glitched logic. player will need to gain anger over and over again to do it this way 
         set_rule(world.get_location("Crate Sanity - 5th El Vibrato Container"),
                      lambda state: state.has("Progressive El Vibrato Device", player, 2))
         set_rule(world.get_location("Crate Sanity - 7th El Vibrato Container"),
